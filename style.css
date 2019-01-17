@@ -1,0 +1,70 @@
+.img-header {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.container-fluid{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.banner-area{
+    height: 330px;
+}
+
+.autorInfo img{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+
+.autorInfo p{
+    display: inline-block;
+}
+
+#blog {
+    margin-top: 30px;
+}
+
+.blogPost{
+    padding: 7px;
+    margin-bottom: 10px;
+    background:#dbdbdb;
+}
+
+.download-area{
+    background: #dbdbdb;
+    margin: 30px 0;
+    padding: 30px 0;
+}
+
+.singleDownload{
+    background: #fff;
+    padding: 7px;
+    margin-bottom: 30px;
+}
+
+@media only screen and (min-width: 820px) {
+    .banner-area{
+        height: 410px;
+    }
+  }
+
+  @media only screen and (min-width: 1010px) {
+    .banner-area{
+        height: 490px;
+    }
+  }
+
+  @media only screen and (min-width: 1250px) {
+    .banner-area{
+        height: 600px;
+    }
+  }
+
+  @media only screen and (min-width: 1540px) {
+    .banner-area{
+        height: 700px;
+    }
+  }

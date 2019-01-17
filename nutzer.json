@@ -1,0 +1,58 @@
+[
+       {
+        "id" : "0",
+        "name" : "Sabine Mustermann",
+        "sex" : "weiblich",
+        "birthday" : "1994-04-10",
+        "categories" : ["asiatisch", "schnell"],
+        "last-klicked-product" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
+        "country" : "deutschland",
+        "group" : "fortgeschritten",
+        "places" : ["Rom", "Berlin"], 
+        "platform" : "ios",
+        "lastLogin" : "2018-05-03"
+    },
+    {
+        "id" : "1",
+        "name" : "Max Mustermann",
+        "sex" : "male",
+        "birthday" : "1996-01-25",
+        "categories" : ["Mexikanisch", "Scharf", "Snack"],
+        "last-klicked-product" : ["4DfU0AZDnyiEIAGcSYeAmM", "4Qc2IDV98AYeaKkGk8e6kC", "2pL4VFLG7yCkqu6Q64A2Ay"],
+        "country" : "japan",
+        "group" : "anfaenger",
+        "places" : ["Peking", "Rom"], 
+        "platform" : "android",
+        "lastLogin" : "2018-12-03"
+    },
+    {
+        "id" : "2",
+        "name" : "James Black",
+        "sex" : "male",
+        "birthday" : "1986-03-07",
+        "categories" : ["Asiatisch", "Low-Carb","Vegetarisch"],
+        "last-klicked-product" : ["6Kb34bwZPOKauaKCMc2EoK", "43jL92x0fSwWu802kq4WS", "1rf14tivKYQY0kuQQqsouc"],
+        "country" : "japan",
+        "group" : "anfaenger",
+        "places" : ["Peking", "Rom"], 
+        "platform" : "android",
+        "lastLogin" : "2018-10-20"
+    },
+    {
+        "id" : "3",
+        "name" : "Valerie Fox",
+        "sex" : "female",
+        "birthday" : "1991-11-29",
+        "categories" : ["Pizza", "Italienisch","Hauptmahlzeit"],
+        "last-klicked-product" : ["6PvZEEB0UoWSicGcc4KSum", "1y9or7a0ygooU0M408cG0C", "6DVOm8kUlG4I0QcCYYS0OU"],
+        "country" : "germany",
+        "group" : "profi",
+        "places" : ["Leipzig", "Rom"], 
+        "platform" : "ios",
+        "lastLogin" : "2018-11-03"
+    }
+   
+
+
+]
+

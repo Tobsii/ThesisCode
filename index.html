@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contentful eigenes</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+		<script type="text/javascript" src="nutzer.json"></script>
+		<script src="javascript/cookies.js"></script>
+		<script src="javascript/bundle.js"></script>
+</head>
+<body>
+
+	<header id="header">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Contentful Test</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+		  
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			  <ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+				  <a class="nav-link" href="#" onclick="myFunction(this)">Home</a>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">Link</a>
+				</li>
+			  </ul>
+			</div>
+		  </nav>
+	</header>
+
+	<section class="banner-area" id="banner"></section>
+
+	<section class="produkte-area">
+		<h2 class="text-center">Produke</h3>
+		<div class="container">
+				<div class="row" id="produkte"></div>
+		</div>
+	</section>
+
+	<section class="blog-area">
+		<div class="container">
+			<h2 class="text-center">Blogbeiträge</h3>
+			<div class="row" id="blog"></div>
+		</div>
+	</section>
+
+	<section class="download-area">
+		<h2 class="text-center">Downloads</h3>
+			<div class="container">
+				<div class="row" id="downloads"></div>
+			</div>
+	</section>
+			
+<!-- HANDLEBARS TEMPLATES -->
+
+	<!-- BANNER -->
+	<script id="templateHeader" type="text/x-handlebars-template">
+        <div class="container-fluid">
+			<h1 class="display-1 text-white text-center">{{title}}</h1>
+			<p class="text-white text-uppercase text-center">{{text}}</p>
+			<img class="img-fluid img-header" src="{{{imgURL}}}" alt="{{imgDescription}}">
+		</div>
+	</script>
+
+	<!-- PRODUKT -->
+	<script id="templateProdukt" type="text/x-handlebars-template">
+        <div class="col-lg-3 col-md-6" onclick="myFunction(this)">
+			<div class="produktThumb">
+				<img src="{{{imgURL}}}" alt="{{imgDescription}}" class="img-fluid">
+			</div>
+			<div class="produktDetails">
+				<h3>{{title}}<span class="badge badge-secondary">{{price}}€</span></h3>
+				<p>Kalorien: {{kalorien}}</p>
+				<p>{{text}}</p>
+				<p>Nationalität: {{nationalitaet}}</p>
+				<p>Art : {{art}}</p>
+				<p>Besonderheit : {{besonderheit}}</p>
+				<p><small>Tags : {{tags}}</small></p>
+				<p><small>Tags Neu : {{tagsNeu}}</small></p>
+			</div>
+		</div>
+	</script>
+
+	<!-- BLOGPOST -->
+	<script id="templatePost" type="text/x-handlebars-template">
+		<div class="col-sm-6">
+			<div class="blogPost">
+				<div class="postThumb">
+					<img src="{{{imgURL}}}" alt="{{title}}" class="img-fluid">
+				</div>
+				<div class="post-details">
+					<small>Tags : {{tags}}</small>
+					<p><small>Tags Neu : {{tagsNeu}}</small></p>
+					<h4>{{title}}</h4>
+					<p>{{text}}</p>
+				</div>
+				<div class="autorInfo">
+					<img src="{{{imgAutorURL}}}" alt="{{autorName}}" class="img-fluid img-thumbnail rounded-circle">
+					<p>Autor: {{autorName}}</p>
+				</div>
+			</div>
+		</div>
+	</script>
+
+	<!-- DOWNLOAD -->
+	<script id="templateDownload" type="text/x-handlebars-template">
+		<div class="col-lg-4 col-md-6">
+			<div class="singleDownload rounded">
+				<h4>{{title}}</h4>
+				<small>Tags : {{tags}}</small>
+				<p><small>Tags Neu : {{tagsNeu}}</small></p>
+				<p>{{text}}</p>
+				<a class="btn btn-outline-info" href="{{{linkToFile}}}" role="button">Download</a>
+			</div>
+		</div>
+	</script>
+			
+</body>
+</html>
