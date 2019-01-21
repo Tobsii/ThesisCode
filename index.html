@@ -75,7 +75,7 @@
 
 	<!-- PRODUKT -->
 	<script id="templateProdukt" type="text/x-handlebars-template">
-        <div class="col-lg-3 col-md-6" onclick="myFunction(this)">
+        <div class="col-lg-3 col-md-6" onclick="getTags(this)">
 			<div class="produktThumb">
 				<img src="{{{imgURL}}}" alt="{{imgDescription}}" class="img-fluid">
 			</div>
@@ -86,22 +86,22 @@
 				<p>Nationalität: {{nationalitaet}}</p>
 				<p>Art : {{art}}</p>
 				<p>Besonderheit : {{besonderheit}}</p>
-				<p><small>Tags : {{tags}}</small></p>
-				<p><small>Tags Neu : {{tagsNeu}}</small></p>
+				<!--<small>Tags : {{tags}}</small> -->
+				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 			</div>
 		</div>
 	</script>
 
 	<!-- BLOGPOST -->
 	<script id="templatePost" type="text/x-handlebars-template">
-		<div class="col-sm-6">
+		<div class="col-sm-6" onclick="getTags(this)">
 			<div class="blogPost">
 				<div class="postThumb">
 					<img src="{{{imgURL}}}" alt="{{title}}" class="img-fluid">
 				</div>
 				<div class="post-details">
-					<small>Tags : {{tags}}</small>
-					<p><small>Tags Neu : {{tagsNeu}}</small></p>
+					<!--<small>Tags : {{tags}}</small> -->
+					<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 					<h4>{{title}}</h4>
 					<p>{{text}}</p>
 				</div>
@@ -115,11 +115,12 @@
 
 	<!-- DOWNLOAD -->
 	<script id="templateDownload" type="text/x-handlebars-template">
-		<div class="col-lg-4 col-md-6">
+		<div class="col-sm-6">
+			<div class="col-lg-4 col-md-6" >
 			<div class="singleDownload rounded">
 				<h4>{{title}}</h4>
 				<small>Tags : {{tags}}</small>
-				<p><small>Tags Neu : {{tagsNeu}}</small></p>
+				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 				<p>{{text}}</p>
 				<a class="btn btn-outline-info" href="{{{linkToFile}}}" role="button">Download</a>
 			</div>
