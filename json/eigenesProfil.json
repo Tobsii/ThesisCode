@@ -2,10 +2,57 @@
     {
      "id" : "0",
      "name": "Max Mustermann",
+     "birthday" : "18.10.1991",
      "e-mail":"max.mustermann@mustermail.org",
-     "straße": "schwarzwaldstraße 11e",
-     "ort": "78141 Schönwald",
-     "lieblingsessen":"Asiatisch, Low-Carb, Leicht"
- }
+     "street": "Bag-End 5",
+     "place": "89076 Middlearth",
+     "favoriteFood":"Asiatisch, Low-Carb, Leicht",
+     "favoriteAuthor" : "Jason Hawkins",
+     "downloads" : "3G0iR7qad2sAwCEWSKG8CC"
+ },
+ {
+    "id" : "1",
+    "name": "Anise Finlay",
+    "birthday" : "09.01.1987",
+    "e-mail":"anise.finlay@mustermail.org",
+    "street": "989 Heavner Court",
+    "place": "11530 Garden City",
+    "favoriteFood":"Pasta, Italienisch, Hauptmahlzeit",
+    "favoriteAuthor" : "Jamie Sanderson",
+    "downloads" : "3G0iR7qad2sAwCEWSKG8CC"
+},
+{
+    "id" : "2",
+    "name": "Arn Rene",
+    "birthday" : "10.08.1996",
+    "e-mail":"arn.rene@mustermail.org",
+    "street": "4743 Randall Drive",
+    "place": "96813 Honolulu",
+    "favoriteFood":"Fleisch, Deftig, Scharf",
+    "favoriteAuthor" : "Brad Tuck",
+    "downloads" : "20ChDQfnJ6uQegiwMyEuy"
+},
+{
+    "id" : "3",
+    "name": "Hailie Corwin",
+    "birthday" : "07.11.1952",
+    "e-mail":"hailie.corwin@mustermail.org",
+    "street": "3097 Travis Street",
+    "place": "33401 West Palm Beach",
+    "favoriteFood":"Vegan, Snack, Frühstück",
+    "favoriteAuthor" : "Antonia King",
+    "downloads" : "20ChDQfnJ6uQegiwMyEuy"
+},
+{
+    "id" : "4",
+    "name": "Annika James",
+    "birthday" : "07.05.1980",
+    "e-mail":"annika.james@mustermail.org",
+    "street": "2496 Hog Camp Road",
+    "place": "60062 Northbrook",
+    "favoriteFood":"Mexikanisch, Scharf, Gebäck",
+    "favoriteAuthor" : "Jason Hawkins",
+    "downloads" : "3lK2SHAFDGow4esEoCUw42"
+}
 
 ]
