@@ -3,7 +3,7 @@
         "id" : "0",
         "categories" : ["asiatisch", "schnell"],
         "last-klicked-product" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
-        "country" : "deutschland",
+        "country" : "germany",
         "platform" : "ios",
         "lastLogin" : "2018-05-03"
     },
@@ -30,6 +30,14 @@
         "country" : "germany",
         "platform" : "ios",
         "lastLogin" : "2018-11-03"
+    },
+    {
+        "id" : "4",
+        "categories" : ["Frühstück", "Vegetarisch","Gebäck"],
+        "last-klicked-product" : ["nFYxYBnmFw8y0IoIosCYC", "7kyvY8l52oWowAam8GOqMe", "1y9or7a0ygooU0M408cG0C"],
+        "country" : "ireland",
+        "platform" : "android",
+        "lastLogin" : "2019-01-05"
     }
    
 

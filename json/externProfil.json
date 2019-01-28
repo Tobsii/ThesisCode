@@ -10,11 +10,11 @@
      "education" : "high",
      "income" : "above average",
      "intent" : "buy a car",
-     "buys" : "low fat, beers, healthy products",
-     "buysOnline" : "travel services, software, tickets, insurance",
-     "ProductInterests": "sport, travel, arts",
-     "affinities" : "books, lifestyle, cinema",
-     "devices" : "smartphone, computer"
+     "buys" : ["low fat", "beers", "healthy products"],
+     "buysOnline" : ["travel services", "software", "tickets", "insurance"],
+     "ProductInterests": ["sport", "travel", "arts"],
+     "affinities" : ["books", "lifestyle", "cinema"],
+     "devices" : ["smartphone", "computer"]
  },
  {
     "id" : "1",
@@ -27,11 +27,11 @@
     "education" : "medium",
     "income" : "average",
     "intent" : "move to house",
-    "buys" : "snacks, new food brands, sweets",
-    "buysOnline" : "fashion, Jewelly and watches, Beauty & care",
-    "ProductInterests": "baby products, dating, DIY products",
-    "affinities" : "family, food, movies",
-    "devices" : "smartphone, tablet"
+    "buys" : ["snacks", "new food brands", "sweets"],
+    "buysOnline" : ["fashion", "Jewelly and watches", "Beauty & care"],
+    "ProductInterests": ["baby products", "dating", "DIY products"],
+    "affinities" : ["family", "food", "movies"],
+    "devices" : ["smartphone", "tablet"]
 },
 {
     "id" : "2",
@@ -44,11 +44,11 @@
     "education" : "medium",
     "income" : "low",
     "intent" : "move to flat",
-    "buys" : "snacks, computer and software, fast food",
-    "buysOnline" : "computer and software, travel services, tickets",
-    "ProductInterests": "Consumer electronics, software, sport",
-    "affinities" : "sports, holidays, entertainment media",
-    "devices" : "smartphone, tablet"
+    "buys" : ["snacks", "computer and software", "fast food"],
+    "buysOnline" : ["computer and software", "travel services", "tickets"],
+    "ProductInterests": ["Consumer electronics", "software", "sport"],
+    "affinities" : ["sports", "holidays", "entertainment media"],
+    "devices" : ["smartphone", "tablet"]
 },
 {
     "id" : "3",
@@ -61,11 +61,11 @@
     "education" : "medium",
     "income" : "average",
     "intent" : "0",
-    "buys" : "fruit, sweets, household items",
-    "buysOnline" : "household items, pet supplies, optics",
-    "ProductInterests": "pets, health, travel",
-    "affinities" : "local, weather, politics",
-    "devices" : "smartphone, tablet"
+    "buys" : ["fruit", "sweets", "household items"],
+    "buysOnline" : ["household items", "pet supplies", "optics"],
+    "ProductInterests": ["pets", "health", "travel"],
+    "affinities" : ["local", "weather", "politics"],
+    "devices" : ["smartphone", "tablet"]
 },
 {
     "id" : "4",
@@ -78,11 +78,11 @@
     "education" : "medium",
     "income" : "high",
     "intent" : "buy a car",
-    "buys" : "brand name food, healthy food, furniture",
-    "buysOnline" : "food, education, computer",
-    "ProductInterests": "dating, health, investment",
-    "affinities" : "books, science, e-commerce",
-    "devices" : "tablet"
+    "buys" : ["brand name food", "healthy food", "furniture"],
+    "buysOnline" : ["food", "education", "computer"],
+    "ProductInterests": ["dating", "health", "investment"],
+    "affinities" : ["books", "science", "e-commerce"],
+    "devices" : ["tablet"]
 }
 
 ]
