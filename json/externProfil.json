@@ -1,10 +1,89 @@
 [
     {
      "id" : "0",
-     "name": "Max Mustermann",
-     "e-mail":"max.mustermann@mustermail.org",
-     "": ""
- }
+     "language": "german",
+     "gender":"m",
+     "age":"25-30",
+     "parent":"0",
+     "mainIncomeEarner" :"1",
+     "employement" : "self-employed",
+     "education" : "high",
+     "income" : "above average",
+     "intent" : "buy a car",
+     "buys" : "low fat, beers, healthy products",
+     "buysOnline" : "travel services, software, tickets, insurance",
+     "ProductInterests": "sport, travel, arts",
+     "affinities" : "books, lifestyle, cinema",
+     "devices" : "smartphone, computer"
+ },
+ {
+    "id" : "1",
+    "language": "german",
+    "gender":"w",
+    "age":"30-35",
+    "parent":"1",
+    "mainIncomeEarner" :"0",
+    "employement" : "employee",
+    "education" : "medium",
+    "income" : "average",
+    "intent" : "move to house",
+    "buys" : "snacks, new food brands, sweets",
+    "buysOnline" : "fashion, Jewelly and watches, Beauty & care",
+    "ProductInterests": "baby products, dating, DIY products",
+    "affinities" : "family, food, movies",
+    "devices" : "smartphone, tablet"
+},
+{
+    "id" : "2",
+    "language": "danish",
+    "gender":"m",
+    "age":"20-25",
+    "parent":"0",
+    "mainIncomeEarner" :"1",
+    "employement" : "student",
+    "education" : "medium",
+    "income" : "low",
+    "intent" : "move to flat",
+    "buys" : "snacks, computer and software, fast food",
+    "buysOnline" : "computer and software, travel services, tickets",
+    "ProductInterests": "Consumer electronics, software, sport",
+    "affinities" : "sports, holidays, entertainment media",
+    "devices" : "smartphone, tablet"
+},
+{
+    "id" : "3",
+    "language": "english",
+    "gender":"w",
+    "age":"65-70",
+    "parent":"1",
+    "mainIncomeEarner" :"0",
+    "employement" : "retired",
+    "education" : "medium",
+    "income" : "average",
+    "intent" : "0",
+    "buys" : "fruit, sweets, household items",
+    "buysOnline" : "household items, pet supplies, optics",
+    "ProductInterests": "pets, health, travel",
+    "affinities" : "local, weather, politics",
+    "devices" : "smartphone, tablet"
+},
+{
+    "id" : "4",
+    "language": "german",
+    "gender":"w",
+    "age":"30-35",
+    "parent":"0",
+    "mainIncomeEarner" :"1",
+    "employement" : "high",
+    "education" : "medium",
+    "income" : "high",
+    "intent" : "buy a car",
+    "buys" : "brand name food, healthy food, furniture",
+    "buysOnline" : "food, education, computer",
+    "ProductInterests": "dating, health, investment",
+    "affinities" : "books, science, e-commerce",
+    "devices" : "tablet"
+}
 
 ]
 

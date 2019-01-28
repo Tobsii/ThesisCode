@@ -1,6 +1,8 @@
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-var json = require('../nutzer.json'); // load local json with nutzerprofile
+var externProfil = require('../json/externProfil'); // load local json with nutzerprofile
+var eigenesProfil = require('../json/eigenesProfil');
+var internTrackingProfil = require('../json/internTrackingProfil.json');
 
 const client = contentful.createClient({
   space: 'xmltm855c5tp',
@@ -217,4 +219,4 @@ function parseAndMap (nutzer, cookie){
   createPage(allCategories)
 }
 
-parseAndMap(json, usercookie)
+parseAndMap(internTrackingProfil, usercookie)

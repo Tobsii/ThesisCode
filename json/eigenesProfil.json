@@ -1,0 +1,11 @@
+[
+    {
+     "id" : "0",
+     "name": "Max Mustermann",
+     "e-mail":"max.mustermann@mustermail.org",
+     "straße": "schwarzwaldstraße 11e",
+     "ort": "78141 Schönwald",
+     "lieblingsessen":"Asiatisch, Low-Carb, Leicht"
+ }
+
+]
