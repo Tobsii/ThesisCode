@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="json/eigenesProfil.json"></script>
 		<script type="text/javascript" src="json/internTrackingProfil.json"></script>
 		<script src="javascript/cookies.js"></script>
+		<script src="javascript/mapping.js"></script>
 		<script src="javascript/bundle.js"></script>
 </head>
 <body>
@@ -58,14 +59,14 @@
 	</section>
 
 	<section class="download-area">
-		<h2 class="text-center">Downloads</h3>
-			<div class="container">
-				<div class="row" id="downloads"></div>
-			</div>
+		<div class="container">
+			<h2 class="text-center">Downloads</h3>
+			<div class="row" id="downloads"></div>
+		</div>
 	</section>
 
 	<section class="zuletztAngeschaut-area">
-		<h2 class="text-center">Zuletzt gelesen</h3>
+		<h2 class="text-center">Zuletzt angeschaute Beiträge</h3>
 			<div class="container">
 				<div class="row" id="zuletztAngeschaut"></div>
 			</div>
@@ -124,7 +125,6 @@
 
 	<!-- DOWNLOAD -->
 	<script id="templateDownload" type="text/x-handlebars-template">
-		<div class="col-sm-6">
 			<div class="col-lg-4 col-md-6" >
 			<div class="singleDownload rounded">
 				<h4>{{title}}</h4>

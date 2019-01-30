@@ -1,8 +1,9 @@
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-var externProfil = require('../json/externProfil.json'); // load local json with nutzerprofile
-var eigenesProfil = require('../json/eigenesProfil.json');
-var internTrackingProfil = require('../json/internTrackingProfil.json');
+const externTrackingProfil = require('../json/externProfil.json'); // load local json with nutzerprofile
+const eigenesProfil = require('../json/eigenesProfil.json');
+const internTrackingProfil = require('../json/internTrackingProfil.json');
+import {parseAndMap} from './mapping'
 
 const client = contentful.createClient({
   space: 'xmltm855c5tp',
@@ -21,7 +22,7 @@ var lastKlicked = "";
 CREATE PAGE
 fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen 
 */
-function createPage(categories, lastSeen){
+export function createPage(categories, lastSeen){
 
   // get single header
   client.getEntry('4CeHNtbObY8Asg2WucGI4U')
@@ -236,34 +237,6 @@ function buildLastProducts(produkt){
 PARSE AND MAP
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
-function parseAndMap (internProfile, cookie){
-
-  internProfile.map(function(user){
-    // if id was found - do stuff
-    if (user.id == cookie){
-      allCategories = "";
 
 
-      // setze Kategorien String zusammen
-      for(var i = 0; i < user.categories.length; i++){
-        if(i == user.categories.length-1){
-          allCategories+= user.categories[i]
-        } else{
-            allCategories+= user.categories[i] + ","
-        } 
-      }
-
-      // finde letztgesehene Beispiele im Profil
-      for(var i = 0; i < user.lastKlickedProduct.length; i++){
-        if(i == user.lastKlickedProduct.length-1){
-          lastKlicked+= user.lastKlickedProduct[i]
-        } else{
-          lastKlicked+= user.lastKlickedProduct[i] + ","
-        } 
-      }
-    }
-  })
-  createPage(allCategories, lastKlicked)
-}
-
-parseAndMap(internTrackingProfil, usercookie)
+parseAndMap(internTrackingProfil, externTrackingProfil, eigenesProfil, usercookie)
