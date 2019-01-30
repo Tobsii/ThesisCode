@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-		<script type="text/javascript" src="json/externesProfil.json"></script>
+		<script type="text/javascript" src="json/externProfil.json"></script>
 		<script type="text/javascript" src="json/eigenesProfil.json"></script>
 		<script type="text/javascript" src="json/internTrackingProfil.json"></script>
 		<script src="javascript/cookies.js"></script>
@@ -61,6 +61,13 @@
 		<h2 class="text-center">Downloads</h3>
 			<div class="container">
 				<div class="row" id="downloads"></div>
+			</div>
+	</section>
+
+	<section class="zuletztAngeschaut-area">
+		<h2 class="text-center">Zuletzt gelesen</h3>
+			<div class="container">
+				<div class="row" id="zuletztAngeschaut"></div>
 			</div>
 	</section>
 			
@@ -125,6 +132,25 @@
 				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 				<p>{{text}}</p>
 				<a class="btn btn-outline-info" href="{{{linkToFile}}}" role="button">Download</a>
+			</div>
+		</div>
+	</script>
+
+	<!-- ZULETZT ANGESCHAUT -->
+	<script id="templateZuletztAngeschaut" type="text/x-handlebars-template">
+        <div class="col-lg-4 col-md-6" onclick="getTags(this)">
+			<div class="produktThumb">
+				<img src="{{{imgURL}}}" alt="{{imgDescription}}" class="img-fluid">
+			</div>
+			<div class="produktDetails">
+				<h3>{{title}}<span class="badge badge-secondary">{{price}}€</span></h3>
+				<p>Kalorien: {{kalorien}}</p>
+				<p>{{text}}</p>
+				<p>Nationalität: {{nationalitaet}}</p>
+				<p>Art : {{art}}</p>
+				<p>Besonderheit : {{besonderheit}}</p>
+				<!--<small>Tags : {{tags}}</small> -->
+				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 			</div>
 		</div>
 	</script>

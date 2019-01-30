@@ -16122,8 +16122,8 @@ function extend() {
 },{}],66:[function(require,module,exports){
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-var externProfil = require('../json/externProfil'); // load local json with nutzerprofile
-var eigenesProfil = require('../json/eigenesProfil');
+var externProfil = require('../json/externProfil.json'); // load local json with nutzerprofile
+var eigenesProfil = require('../json/eigenesProfil.json');
 var internTrackingProfil = require('../json/internTrackingProfil.json');
 
 const client = contentful.createClient({
@@ -16137,12 +16137,13 @@ var usercookie = 2;
 
 // Variables for personalization from user profile
 var allCategories = "none"; // if user not exists, set unknown categorie.
+var lastKlicked = "";
 
 /* 
 CREATE PAGE
 fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen 
 */
-function createPage(categories){
+function createPage(categories, lastSeen){
 
   // get single header
   client.getEntry('4CeHNtbObY8Asg2WucGI4U')
@@ -16254,6 +16255,20 @@ function createPage(categories){
     }
   })
   .catch(console.error);
+
+  // Get last klicked Beiträge - sind immer 3
+  // TODO: Insert IDs
+  client.getEntries({
+    content_type: 'produkt',
+    limit : 3,
+    'sys.id[in]': lastSeen,
+  })
+  .then(function(response){
+    let produktZuletzt = response.items;
+    console.log(produktZuletzt); 
+    buildLastProducts(produktZuletzt);   
+  })
+  .catch(console.error);
 }
 
 //BUILD POSTS FUNCTION
@@ -16317,18 +16332,41 @@ function buildProducts(produkt){
     })
 }
 
+function buildLastProducts(produkt){
+  var source = document.getElementById("templateZuletztAngeschaut").innerHTML;
+    var template = Handlebars.compile(source);
+    return produkt.map(function(produkt){
+      var context = {
+        title : produkt.fields.produktname,
+        text : produkt.fields.produktbeschreibung,
+        price : produkt.fields.produktpreis,
+        kalorien : produkt.fields.produktkalorien,
+        imgURL : 'https:' + produkt.fields.produktbild.fields.file.url,
+        imgDescription : produkt.fields.produktbild.fields.description,
+        tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
+        nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
+        art : produkt.fields.produktart[0].fields.artname,
+        besonderheit : produkt.fields.produktbesonderheit[0].fields.bezeichnung,
+        tagsNeu : produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
+      }
+      var result = template(context);
+      document.getElementById("zuletztAngeschaut").innerHTML+=result;
+    })
+}
+
 /* 
 PARSE AND MAP
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
-function parseAndMap (nutzer, cookie){
+function parseAndMap (internProfile, cookie){
 
-  nutzer.map(function(user){
+  internProfile.map(function(user){
     // if id was found - do stuff
     if (user.id == cookie){
+      allCategories = "";
+
 
       // setze Kategorien String zusammen
-      allCategories = "";
       for(var i = 0; i < user.categories.length; i++){
         if(i == user.categories.length-1){
           allCategories+= user.categories[i]
@@ -16336,33 +16374,168 @@ function parseAndMap (nutzer, cookie){
             allCategories+= user.categories[i] + ","
         } 
       }
+
+      // finde letztgesehene Beispiele im Profil
+      for(var i = 0; i < user.lastKlickedProduct.length; i++){
+        if(i == user.lastKlickedProduct.length-1){
+          lastKlicked+= user.lastKlickedProduct[i]
+        } else{
+          lastKlicked+= user.lastKlickedProduct[i] + ","
+        } 
+      }
     }
   })
-  createPage(allCategories)
+  createPage(allCategories, lastKlicked)
 }
 
-parseAndMap(json, usercookie)
+parseAndMap(internTrackingProfil, usercookie)
 
-},{"../json/eigenesProfil":67,"../json/externProfil":68,"../json/internTrackingProfil.json":69,"contentful":70,"handlebars":100}],67:[function(require,module,exports){
+},{"../json/eigenesProfil.json":67,"../json/externProfil.json":68,"../json/internTrackingProfil.json":69,"contentful":70,"handlebars":100}],67:[function(require,module,exports){
 module.exports=[
     {
      "id" : "0",
      "name": "Max Mustermann",
+     "birthday" : "18.10.1991",
      "e-mail":"max.mustermann@mustermail.org",
-     "straße": "schwarzwaldstraße 11e",
-     "ort": "78141 Schönwald",
-     "lieblingsessen":"Asiatisch, Low-Carb, Leicht"
- }
+     "street": "Bag-End 5",
+     "place": "89076 Middlearth",
+     "favoriteFood":["Asiatisch", "Low-Carb", "Leicht"],
+     "favoriteAuthor" : "Jason Hawkins",
+     "downloads" : "3G0iR7qad2sAwCEWSKG8CC"
+ },
+ {
+    "id" : "1",
+    "name": "Anise Finlay",
+    "birthday" : "09.01.1987",
+    "e-mail":"anise.finlay@mustermail.org",
+    "street": "989 Heavner Court",
+    "place": "11530 Garden City",
+    "favoriteFood": ["Pasta", "Italienisch", "Hauptmahlzeit"],
+    "favoriteAuthor" : "Jamie Sanderson",
+    "downloads" : "3G0iR7qad2sAwCEWSKG8CC"
+},
+{
+    "id" : "2",
+    "name": "Arn Rene",
+    "birthday" : "10.08.1996",
+    "e-mail":"arn.rene@mustermail.org",
+    "street": "4743 Randall Drive",
+    "place": "96813 Honolulu",
+    "favoriteFood":["Fleisch", "Deftig", "Scharf"],
+    "favoriteAuthor" : "Brad Tuck",
+    "downloads" : "20ChDQfnJ6uQegiwMyEuy"
+},
+{
+    "id" : "3",
+    "name": "Hailie Corwin",
+    "birthday" : "07.11.1952",
+    "e-mail":"hailie.corwin@mustermail.org",
+    "street": "3097 Travis Street",
+    "place": "33401 West Palm Beach",
+    "favoriteFood":["Vegan", "Snack", "Frühstück"],
+    "favoriteAuthor" : "Antonia King",
+    "downloads" : "20ChDQfnJ6uQegiwMyEuy"
+},
+{
+    "id" : "4",
+    "name": "Annika James",
+    "birthday" : "07.05.1980",
+    "e-mail":"annika.james@mustermail.org",
+    "street": "2496 Hog Camp Road",
+    "place": "60062 Northbrook",
+    "favoriteFood":["Mexikanisch", "Scharf", "Gebäck"],
+    "favoriteAuthor" : "Jason Hawkins",
+    "downloads" : "3lK2SHAFDGow4esEoCUw42"
+}
 
 ]
 },{}],68:[function(require,module,exports){
 module.exports=[
     {
      "id" : "0",
-     "name": "Max Mustermann",
-     "e-mail":"max.mustermann@mustermail.org",
-     "language": "deutsch"
- }
+     "language": "german",
+     "gender":"m",
+     "age":"25-30",
+     "parent":"0",
+     "mainIncomeEarner" :"1",
+     "employement" : "self-employed",
+     "education" : "high",
+     "income" : "above average",
+     "intent" : "buy a car",
+     "buys" : ["low fat", "beers", "healthy products"],
+     "buysOnline" : ["travel services", "software", "tickets", "insurance"],
+     "ProductInterests": ["sport", "travel", "arts"],
+     "affinities" : ["books", "lifestyle", "cinema"],
+     "devices" : ["smartphone", "computer"]
+ },
+ {
+    "id" : "1",
+    "language": "german",
+    "gender":"w",
+    "age":"30-35",
+    "parent":"1",
+    "mainIncomeEarner" :"0",
+    "employement" : "employee",
+    "education" : "medium",
+    "income" : "average",
+    "intent" : "move to house",
+    "buys" : ["snacks", "new food brands", "sweets"],
+    "buysOnline" : ["fashion", "Jewelly and watches", "Beauty & care"],
+    "ProductInterests": ["baby products", "dating", "DIY products"],
+    "affinities" : ["family", "food", "movies"],
+    "devices" : ["smartphone", "tablet"]
+},
+{
+    "id" : "2",
+    "language": "danish",
+    "gender":"m",
+    "age":"20-25",
+    "parent":"0",
+    "mainIncomeEarner" :"1",
+    "employement" : "student",
+    "education" : "medium",
+    "income" : "low",
+    "intent" : "move to flat",
+    "buys" : ["snacks", "computer and software", "fast food"],
+    "buysOnline" : ["computer and software", "travel services", "tickets"],
+    "ProductInterests": ["Consumer electronics", "software", "sport"],
+    "affinities" : ["sports", "holidays", "entertainment media"],
+    "devices" : ["smartphone", "tablet"]
+},
+{
+    "id" : "3",
+    "language": "english",
+    "gender":"w",
+    "age":"65-70",
+    "parent":"1",
+    "mainIncomeEarner" :"0",
+    "employement" : "retired",
+    "education" : "medium",
+    "income" : "average",
+    "intent" : "0",
+    "buys" : ["fruit", "sweets", "household items"],
+    "buysOnline" : ["household items", "pet supplies", "optics"],
+    "ProductInterests": ["pets", "health", "travel"],
+    "affinities" : ["local", "weather", "politics"],
+    "devices" : ["smartphone", "tablet"]
+},
+{
+    "id" : "4",
+    "language": "german",
+    "gender":"w",
+    "age":"30-35",
+    "parent":"0",
+    "mainIncomeEarner" :"1",
+    "employement" : "high",
+    "education" : "medium",
+    "income" : "high",
+    "intent" : "buy a car",
+    "buys" : ["brand name food", "healthy food", "furniture"],
+    "buysOnline" : ["food", "education", "computer"],
+    "ProductInterests": ["dating", "health", "investment"],
+    "affinities" : ["books", "science", "e-commerce"],
+    "devices" : ["tablet"]
+}
 
 ]
 
@@ -16372,15 +16545,15 @@ module.exports=[
        {
         "id" : "0",
         "categories" : ["asiatisch", "schnell"],
-        "last-klicked-product" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
-        "country" : "deutschland",
+        "lastKlickedProduct" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
+        "country" : "germany",
         "platform" : "ios",
         "lastLogin" : "2018-05-03"
     },
     {
         "id" : "1",
         "categories" : ["Mexikanisch", "Scharf", "Snack"],
-        "last-klicked-product" : ["4DfU0AZDnyiEIAGcSYeAmM", "4Qc2IDV98AYeaKkGk8e6kC", "2pL4VFLG7yCkqu6Q64A2Ay"],
+        "lastKlickedProduct" : ["4DfU0AZDnyiEIAGcSYeAmM", "4Qc2IDV98AYeaKkGk8e6kC", "2pL4VFLG7yCkqu6Q64A2Ay"],
         "country" : "japan",
         "platform" : "android",
         "lastLogin" : "2018-12-03"
@@ -16388,7 +16561,7 @@ module.exports=[
     {
         "id" : "2",
         "categories" : ["Asiatisch", "Low-Carb","Vegetarisch"],
-        "last-klicked-product" : ["6Kb34bwZPOKauaKCMc2EoK", "43jL92x0fSwWu802kq4WS", "1rf14tivKYQY0kuQQqsouc"],
+        "lastKlickedProduct" : ["6Kb34bwZPOKauaKCMc2EoK", "43jL92x0fSwWu802kq4WS", "1rf14tivKYQY0kuQQqsouc"],
         "country" : "japan",
         "platform" : "android",
         "lastLogin" : "2018-10-20"
@@ -16396,10 +16569,18 @@ module.exports=[
     {
         "id" : "3",
         "categories" : ["Pizza", "Italienisch","Hauptmahlzeit"],
-        "last-klicked-product" : ["6PvZEEB0UoWSicGcc4KSum", "1y9or7a0ygooU0M408cG0C", "6DVOm8kUlG4I0QcCYYS0OU"],
+        "lastKlickedProduct" : ["6PvZEEB0UoWSicGcc4KSum", "1y9or7a0ygooU0M408cG0C", "6DVOm8kUlG4I0QcCYYS0OU"],
         "country" : "germany",
         "platform" : "ios",
         "lastLogin" : "2018-11-03"
+    },
+    {
+        "id" : "4",
+        "categories" : ["Frühstück", "Vegetarisch","Gebäck"],
+        "lastKlickedProduct" : ["nFYxYBnmFw8y0IoIosCYC", "7kyvY8l52oWowAam8GOqMe", "1y9or7a0ygooU0M408cG0C"],
+        "country" : "ireland",
+        "platform" : "android",
+        "lastLogin" : "2019-01-05"
     }
    
 

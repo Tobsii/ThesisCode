@@ -1,7 +1,7 @@
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-var externProfil = require('../json/externProfil'); // load local json with nutzerprofile
-var eigenesProfil = require('../json/eigenesProfil');
+var externProfil = require('../json/externProfil.json'); // load local json with nutzerprofile
+var eigenesProfil = require('../json/eigenesProfil.json');
 var internTrackingProfil = require('../json/internTrackingProfil.json');
 
 const client = contentful.createClient({
@@ -15,12 +15,13 @@ var usercookie = 2;
 
 // Variables for personalization from user profile
 var allCategories = "none"; // if user not exists, set unknown categorie.
+var lastKlicked = "";
 
 /* 
 CREATE PAGE
 fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen 
 */
-function createPage(categories){
+function createPage(categories, lastSeen){
 
   // get single header
   client.getEntry('4CeHNtbObY8Asg2WucGI4U')
@@ -132,6 +133,20 @@ function createPage(categories){
     }
   })
   .catch(console.error);
+
+  // Get last klicked Beiträge - sind immer 3
+  // TODO: Insert IDs
+  client.getEntries({
+    content_type: 'produkt',
+    limit : 3,
+    'sys.id[in]': lastSeen,
+  })
+  .then(function(response){
+    let produktZuletzt = response.items;
+    console.log(produktZuletzt); 
+    buildLastProducts(produktZuletzt);   
+  })
+  .catch(console.error);
 }
 
 //BUILD POSTS FUNCTION
@@ -195,18 +210,41 @@ function buildProducts(produkt){
     })
 }
 
+function buildLastProducts(produkt){
+  var source = document.getElementById("templateZuletztAngeschaut").innerHTML;
+    var template = Handlebars.compile(source);
+    return produkt.map(function(produkt){
+      var context = {
+        title : produkt.fields.produktname,
+        text : produkt.fields.produktbeschreibung,
+        price : produkt.fields.produktpreis,
+        kalorien : produkt.fields.produktkalorien,
+        imgURL : 'https:' + produkt.fields.produktbild.fields.file.url,
+        imgDescription : produkt.fields.produktbild.fields.description,
+        tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
+        nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
+        art : produkt.fields.produktart[0].fields.artname,
+        besonderheit : produkt.fields.produktbesonderheit[0].fields.bezeichnung,
+        tagsNeu : produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
+      }
+      var result = template(context);
+      document.getElementById("zuletztAngeschaut").innerHTML+=result;
+    })
+}
+
 /* 
 PARSE AND MAP
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
-function parseAndMap (nutzer, cookie){
+function parseAndMap (internProfile, cookie){
 
-  nutzer.map(function(user){
+  internProfile.map(function(user){
     // if id was found - do stuff
     if (user.id == cookie){
+      allCategories = "";
+
 
       // setze Kategorien String zusammen
-      allCategories = "";
       for(var i = 0; i < user.categories.length; i++){
         if(i == user.categories.length-1){
           allCategories+= user.categories[i]
@@ -214,9 +252,18 @@ function parseAndMap (nutzer, cookie){
             allCategories+= user.categories[i] + ","
         } 
       }
+
+      // finde letztgesehene Beispiele im Profil
+      for(var i = 0; i < user.lastKlickedProduct.length; i++){
+        if(i == user.lastKlickedProduct.length-1){
+          lastKlicked+= user.lastKlickedProduct[i]
+        } else{
+          lastKlicked+= user.lastKlickedProduct[i] + ","
+        } 
+      }
     }
   })
-  createPage(allCategories)
+  createPage(allCategories, lastKlicked)
 }
 
 parseAndMap(internTrackingProfil, usercookie)
