@@ -16132,9 +16132,7 @@ const client = contentful.createClient({
   accessToken: 'ee34981f7b6f136d65db092818f06976ee39e520c535325e06322c6920a1b53a'
 })
 
-// set Cookie
-var usercookie = 2;
-
+var usercookie = 2
 /* 
 CREATE PAGE
 fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen 
@@ -16356,7 +16354,7 @@ verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann
 function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
 
   var ownAge
-  var ownCategories
+  var ownCategories = ""
   var ownAuthor
   var ownDownloads
   var ownCountry
@@ -16374,6 +16372,7 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
           ownCategories += user.favoriteFood[i]
         } else {
           ownCategories += user.favoriteFood[i] + ","
+          console.log("Own Categories: "+ownCategories)
         }
       }
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
@@ -16381,7 +16380,7 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
     
   })
 
-  var externCategories
+  var externCategories  = ""
   var externCountry
   var externAge
   // Optional: überprüfen ob sich die Kategorien widersprechen
@@ -16419,8 +16418,8 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
     
   })
 
-  var internCategories
-  var internLastKlicked
+  var internCategories = ""
+  var internLastKlicked = ""
   var internCountry
 
   internProfile.map(function (user) {
