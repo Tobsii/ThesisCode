@@ -1,6 +1,6 @@
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-const externTrackingProfil = require('../json/externProfil.json'); // load local json with nutzerprofile
+const externTrackingProfil = require('../json/externProfil.json');
 const eigenesProfil = require('../json/eigenesProfil.json');
 const internTrackingProfil = require('../json/internTrackingProfil.json');
 
@@ -43,6 +43,8 @@ function createPage(country, age, author, downloads, lastKlicked, categories){
   client.getEntries({
     content_type: 'beitrag',
     limit: 4,
+    "fields.autor.fields.autorenname": author,
+    "fields.autor.sys.contentType.sys.id":"autor"
   })
   .then(function(response){
     console.log(response.items);
@@ -56,6 +58,9 @@ function createPage(country, age, author, downloads, lastKlicked, categories){
       client.getEntries({
         content_type: 'beitrag',
         limit: missingItems,
+        'fields.tags[in]': categories,
+        "fields.autor.fields.autorenname[ne]": author,
+        "fields.autor.sys.contentType.sys.id":"autor"
       })
       .then(function(response){
         let beitrag = response.items;
@@ -103,6 +108,7 @@ function createPage(country, age, author, downloads, lastKlicked, categories){
   client.getEntries({
     content_type: 'download',
     limit: 3,
+    'sys.id[ne]': downloads
   })
   .then(function(response){
     let download = response.items;
@@ -118,7 +124,7 @@ function createPage(country, age, author, downloads, lastKlicked, categories){
         limit: missingItems,
       })
       .then(function(response){
-        let download = download.items;
+        let download = response.items;
         console.log(download);
     
         buildDownloads(download);
@@ -229,7 +235,7 @@ function buildLastProducts(produkt){
 PARSE AND MAP
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
-function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
+function parseAndMap(cookie) {
 
   var ownAge
   var ownCategories = ""
@@ -237,7 +243,7 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
   var ownDownloads
   var ownCountry
 
-  ownProfile.map(function (user) {
+  eigenesProfil.map(function (user) {
     if (user.id == cookie) {
       ownAuthor = user.favoriteAuthor
       ownDownloads = user.downloads
@@ -261,27 +267,29 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
   var externCountry
   var externAge
   // Optional: überprüfen ob sich die Kategorien widersprechen
-  externProfile.map(function (user) {
+  externTrackingProfil.map(function (user) {
     if (user.id == cookie) {
       externCountry = getCountry(user.language)
       externAge = user.age
       user.buys.map(function(cat){
-        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch"){
+          externCategories = externCategories + cat + ", "
+          console.log("externe Kat: "+ externCategories + " und cat: "+ cat)
+        }
+      })
+
+      user.buysOnline.map(function(cat){
+        if (cat === "Frühstück" || "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
           externCategories = externCategories + cat + ", "
       })
 
       user.buysOnline.map(function(cat){
-        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
           externCategories = externCategories + cat + ", "
       })
 
       user.buysOnline.map(function(cat){
-        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
-          externCategories = externCategories + cat + ", "
-      })
-
-      user.buysOnline.map(function(cat){
-        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
         externCategories = externCategories + cat + ", "
       })
       // usw. - reicht erstmal als beispiel
@@ -299,7 +307,7 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
   var internLastKlicked = ""
   var internCountry
 
-  internProfile.map(function (user) {
+  internTrackingProfil.map(function (user) {
     if (user.id == cookie) {
       internCategories = "";
       internCountry = user.country
@@ -350,6 +358,7 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
     age = externAge
   }
 
+  var uniqueCategories
   // füge alle Kategorien zu einem String zusammen
   if (ownCategories == "" && externCategories == "" && internCategories== ""){
     allCategories="default"
@@ -357,11 +366,10 @@ function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
     allCategories = ownCategories + ", " + externCategories + internCategories
 
     // entferne Dublikate
-    var uniqueCategories=allCategories.split(',').filter(function(item,i,allItems){
+    uniqueCategories=allCategories.split(',').filter(function(item,i,allItems){
       return i==allItems.indexOf(item);
     }).join(',');
   
-    // TODO: Check Widersprüche im String?
   }
   
 
@@ -405,5 +413,4 @@ function getCountry (language){
   }
 }
 
-
-parseAndMap(internTrackingProfil, externTrackingProfil, eigenesProfil, usercookie)
+parseAndMap(0)

@@ -10,11 +10,11 @@
      "education" : "high",
      "income" : "above average",
      "intent" : "buy a car",
-     "buys" : ["low fat", "beers", "healthy products"],
-     "buysOnline" : ["travel services", "software", "tickets", "insurance"],
-     "ProductInterests": ["sport", "travel", "arts"],
-     "affinities" : ["books", "lifestyle", "cinema"],
-     "devices" : ["smartphone", "computer"]
+     "buys" : ["Low fat", "Beers", "Healthy products"],
+     "buysOnline" : ["Travel Services", "Software", "Tickets", "Insurance"],
+     "ProductInterests": ["Sport", "Travel", "Arts"],
+     "affinities" : ["Books", "Lifestyle", "Cinema"],
+     "devices" : ["Smartphone", "Computer"]
  },
  {
     "id" : "1",
