@@ -1,8 +1,8 @@
 {
-  "name": "contentful-eigenes_cookies",
+  "name": "personalisierung_contentful",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "dependencies": {
     "contentful": "^7.0.5",
     "handlebars": "^4.0.12"
