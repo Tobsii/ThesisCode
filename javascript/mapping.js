@@ -23,15 +23,46 @@ export function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
           ownCategories += user.favoriteFood[i] + ","
         }
       }
-      console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
+    console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
   })
 
+  var externCategories
+  var externCountry
+  var externAge
+  // Optional: überprüfen ob sich die Kategorien widersprechen
   externProfile.map(function (user) {
     if (user.id == cookie) {
+      externCountry = getCountry(user.language)
+      externAge = user.age
+      user.buys.map(function(cat){
+        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+          externCategories = externCategories + cat + ", "
+      })
 
+      user.buysOnline.map(function(cat){
+        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+          externCategories = externCategories + cat + ", "
+      })
+
+      user.buysOnline.map(function(cat){
+        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+          externCategories = externCategories + cat + ", "
+      })
+
+      user.buysOnline.map(function(cat){
+        if (cat == "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        externCategories = externCategories + cat + ", "
+      })
+      // usw. - reicht erstmal als beispiel
+
+      if (user.parent == 1){
+        externCategories = externCategories + "Pizza, Pasta, Gebäck"
+      }
+      // usw. - mapping für andere Dinge nur im Text beschreiben
+      
     }
-
+    console.log(externCategories, externCountry)
   })
 
   var internCategories
@@ -58,11 +89,35 @@ export function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
           internLastKlicked += user.lastKlickedProduct[i] + ","
         }
       }
-    }
+    } // end if
     console.log("internData: " + internCategories, internLastKlicked, internCountry)
   })
 
-  createPage(allCategories, internLastKlicked)
+  // TODO: vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
+  var age
+  var allCategories
+  var country
+  // TODO - lookup javascript ifelse
+  if(ownCountry != ""){
+    country = ownCountry
+  } else {
+    if(internCountry != ""){
+      country = internCountry
+    } else {
+      if(externCountry != ""){
+        country = externCountry
+      } else{
+        country = "default"
+      }
+    }
+  }
+
+  // meist wird beim Personalisieren ein altersbereich angegeben, deshalb würde ich hier den bereich aus dem Tool nehmen
+  var externStartEndAge = externAge.split("-")
+  if (ownAge !< externStartEndAge[0] && ownAge !> externStartEndAge[1])
+    age = externAge
+
+  createPage(allCategories, internLastKlicked, country)
 
 }
 
@@ -80,4 +135,23 @@ function calculate_age(birth_month, birth_day, birth_year) {
     age--;
   }
   return age;
+}
+
+function getCountry (language){
+  switch(language) {
+    case 'german':
+      return 'Germany'
+      break;
+    case 'danish':
+      return 'Denmark'
+      break;
+    case 'spanish':
+      return 'Spain'
+      break;
+    case 'english':
+      return 'America'
+      break;
+    default:
+      return 'Germany'
+  }
 }
