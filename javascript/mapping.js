@@ -57,7 +57,7 @@ export function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
       // usw. - reicht erstmal als beispiel
 
       if (user.parent == 1){
-        externCategories = externCategories + "Pizza, Pasta, Gebäck"
+        externCategories = externCategories + "Pizza, Pasta, Gebäck, "
       }
       // usw. - mapping für andere Dinge nur im Text beschreiben
       
@@ -93,11 +93,10 @@ export function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
     console.log("internData: " + internCategories, internLastKlicked, internCountry)
   })
 
-  // TODO: vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
+  // vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
   var age
   var allCategories
   var country
-  // TODO - lookup javascript ifelse
   if(ownCountry != ""){
     country = ownCountry
   } else {
@@ -114,10 +113,24 @@ export function parseAndMap(internProfile, externProfile, ownProfile, cookie) {
 
   // meist wird beim Personalisieren ein altersbereich angegeben, deshalb würde ich hier den bereich aus dem Tool nehmen
   var externStartEndAge = externAge.split("-")
-  if (ownAge !< externStartEndAge[0] && ownAge !> externStartEndAge[1])
+  if (ownAge < externStartEndAge[0] || ownAge > externStartEndAge[1]){
+    age = ownAge
+  }else {
     age = externAge
+  }
 
-  createPage(allCategories, internLastKlicked, country)
+  // füge alle Kategorien zu einem String zusammen
+  allCategories = ownCategories + ", " + externCategories + internCategories
+
+  // entferne Dublikate
+  var uniqueCategories=allCategories.split(',').filter(function(item,i,allItems){
+    return i==allItems.indexOf(item);
+  }).join(',');
+
+  // Check Widersprüche im String?
+
+  console.log("Übergabewerte an Create Page: " + country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
+  createPage(country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
 
 }
 
