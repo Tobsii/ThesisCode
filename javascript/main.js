@@ -10,7 +10,6 @@ const client = contentful.createClient({
   accessToken: 'ee34981f7b6f136d65db092818f06976ee39e520c535325e06322c6920a1b53a'
 })
 
-var usercookie = 2
 /* 
 CREATE PAGE
 fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen 
@@ -232,10 +231,10 @@ function buildLastProducts(produkt){
 }
 
 /* 
-PARSE AND MAP
+PARSE AND MAP 
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
-function parseAndMap(cookie) {
+window.parseAndMap = function (cookie) {
 
   var ownAge
   var ownCategories = ""
@@ -269,27 +268,27 @@ function parseAndMap(cookie) {
   // Optional: überprüfen ob sich die Kategorien widersprechen
   externTrackingProfil.map(function (user) {
     if (user.id == cookie) {
+      var tagArray = ['Frühstück', 'Pizza', 'Pasta', 'Vegetarisch', 'Scharf', 'Mexikanisch', 'Gebäck', 'Snack', 'Low-Carb', 'Asiastisch', 'Leicht', 'Vegan', 'Fleisch', 'Abend', 'Deftig', 'Hauptmahlzeit', 'Italienisch']
       externCountry = getCountry(user.language)
       externAge = user.age
       user.buys.map(function(cat){
-        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch"){
+        if (tagArray.indexOf(cat)>=0){
           externCategories = externCategories + cat + ", "
-          console.log("externe Kat: "+ externCategories + " und cat: "+ cat)
         }
       })
-
+      console.log("Array" + user.buysOnline)
       user.buysOnline.map(function(cat){
-        if (cat === "Frühstück" || "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (tagArray.indexOf(cat)>=0)
           externCategories = externCategories + cat + ", "
       })
 
       user.buysOnline.map(function(cat){
-        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (tagArray.indexOf(cat)>=0)
           externCategories = externCategories + cat + ", "
       })
 
       user.buysOnline.map(function(cat){
-        if (cat === "Frühstück"|| "Pizza"|| "Pasta"|| "Vegetarisch"|| "Scharf"|| "Mexikanisch"|| "Gebäck"|| "Snack"|| "Low-Carb"|| "Asiastisch"|| "Leicht"|| "Vegan"|| "Fleisch"|| "Abend"|| "Deftig"|| "Hauptmahlzeit"|| "Italienisch")
+        if (tagArray.indexOf(cat)>=0)
         externCategories = externCategories + cat + ", "
       })
       // usw. - reicht erstmal als beispiel
@@ -412,5 +411,3 @@ function getCountry (language){
       return 'Germany'
   }
 }
-
-parseAndMap(0)

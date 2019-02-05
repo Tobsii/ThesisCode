@@ -78,7 +78,6 @@
 
 	<!-- HANDLEBARS TEMPLATES -->
 
-
 	<!-- BANNER -->
 	<script id="templateHeader" type="text/x-handlebars-template">
         <div class="container-fluid">
@@ -101,7 +100,6 @@
 				<p>Nationalität: {{nationalitaet}}</p>
 				<p>Art : {{art}}</p>
 				<p>Besonderheit : {{besonderheit}}</p>
-				<!--<small>Tags : {{tags}}</small> -->
 				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 			</div>
 		</div>
@@ -115,7 +113,6 @@
 					<img src="{{{imgURL}}}" alt="{{title}}" class="img-fluid">
 				</div>
 				<div class="post-details">
-					<!--<small>Tags : {{tags}}</small> -->
 					<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 					<h4>{{title}}</h4>
 					<p>{{text}}</p>
@@ -154,14 +151,16 @@
 				<p>Nationalität: {{nationalitaet}}</p>
 				<p>Art : {{art}}</p>
 				<p>Besonderheit : {{besonderheit}}</p>
-				<!--<small>Tags : {{tags}}</small> -->
 				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
 			</div>
 		</div>
 	</script>
-
 	<!-- END HANDLEBARS TEMPLATES -->
 
+	<script>
+		var usercookie = 4
+		parseAndMap(usercookie)
+	</script>
 
 			
 </body>
