@@ -16147,12 +16147,7 @@ function createPage(country, age, author, downloads, lastKlicked, categories) {
   getLastKlickedEntries(lastKlicked)
 }
 
-
-
-/* 
-PARSE AND MAP 
-verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
-*/
+// Variablen für die Werte aus den Nutzerprofilen
 var ownAge
 var ownCategories = ""
 var ownAuthor
@@ -16164,6 +16159,10 @@ var externAge
 var internCategories = ""
 var internLastKlicked = ""
 var internCountry
+/* 
+PARSE AND MAP 
+verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
+*/
 window.parseAndMap = function (cookie) {
 
   clearPage()
@@ -16178,7 +16177,6 @@ window.parseAndMap = function (cookie) {
   var age = compareAllAges()
   var uniqueCategories = putCategoriesTogether()
   var country = compareAllCountries()
-
 
   console.log("Übergabewerte an Create Page: " + country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
   createPage(country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
@@ -16408,14 +16406,14 @@ function buildLastProducts(produkt) {
   })
 }
 
-function clearPage(){
+function clearPage() {
   document.getElementById("blog").innerHTML = ""
   document.getElementById("downloads").innerHTML = ""
   document.getElementById("produkte").innerHTML = ""
   document.getElementById("zuletztAngeschaut").innerHTML = ""
 }
 
-function mapEigenesProfil(cookie){
+function mapEigenesProfil(cookie) {
   eigenesProfil.map(function (user) {
     if (user.id == cookie) {
       ownAuthor = user.favoriteAuthor
@@ -16423,21 +16421,15 @@ function mapEigenesProfil(cookie){
       ownCountry = user.country
       var birthday = user.birthday.split(".")
       ownAge = calculate_age(birthday[1], birthday[0], birthday[2])
+      ownCategories = createCategoriesString(user.favoriteFood)
 
-      for (var i = 0; i < user.favoriteFood.length; i++) {
-        if (i == user.favoriteFood.length - 1) {
-          ownCategories += user.favoriteFood[i]
-        } else {
-          ownCategories += user.favoriteFood[i] + ","
-        }
-      }
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
 
   })
 }
 
-function mapExternProfil(cookie){
+function mapExternProfil(cookie) {
   externTrackingProfil.map(function (user) {
     if (user.id == cookie) {
       var tagArray = ['Frühstück', 'Pizza', 'Pasta', 'Vegetarisch', 'Scharf', 'Mexikanisch', 'Gebäck', 'Snack', 'Low-Carb', 'Asiastisch', 'Leicht', 'Vegan', 'Fleisch', 'Abend', 'Deftig', 'Hauptmahlzeit', 'Italienisch']
@@ -16473,34 +16465,20 @@ function mapExternProfil(cookie){
   })
 }
 
-function mapInternProfil(cookie){
+function mapInternProfil(cookie) {
   internTrackingProfil.map(function (user) {
     if (user.id == cookie) {
-      internCategories = ""
       internCountry = user.country
+      internCategories = createCategoriesString(user.categories)
+      internLastKlicked = createCategoriesString(user.lastKlickedProduct)
 
-      for (var i = 0; i < user.categories.length; i++) {
-        if (i == user.categories.length - 1) {
-          internCategories += user.categories[i]
-        } else {
-          internCategories += user.categories[i] + ","
-        }
-      }
-
-      for (var i = 0; i < user.lastKlickedProduct.length; i++) {
-        if (i == user.lastKlickedProduct.length - 1) {
-          internLastKlicked += user.lastKlickedProduct[i]
-        } else {
-          internLastKlicked += user.lastKlickedProduct[i] + ","
-        }
-      }
       console.log("internData: " + internCategories, internLastKlicked, internCountry)
 
     } // end if
   })
 }
 
-function compareAllCountries(){
+function compareAllCountries() {
   if (ownCountry != "") {
     return ownCountry
   } else {
@@ -16516,7 +16494,7 @@ function compareAllCountries(){
   }
 }
 
-function compareAllAges(){
+function compareAllAges() {
   // meist wird beim Personalisieren ein Altersbereich angegeben, deshalb nehme ich hier den Bereich aus dem Tool, sofern er mit dem Alter im eigenen Nuterprofil übereinstimmt
   var externStartEndAge = externAge.split("-")
   if (ownAge < externStartEndAge[0] || ownAge > externStartEndAge[1]) {
@@ -16526,7 +16504,7 @@ function compareAllAges(){
   }
 }
 
-function putCategoriesTogether(){
+function putCategoriesTogether() {
   var allCategories
   // füge alle Kategorien zu einem String zusammen
   if (ownCategories == "" && externCategories == "" && internCategories == "") {
@@ -16541,6 +16519,19 @@ function putCategoriesTogether(){
 
   }
   return uniqueCategories
+}
+
+function createCategoriesString(userinfo){
+  var joinCategories = ""
+  for (var i = 0; i < userinfo.length; i++) {
+    if (i == userinfo.length - 1) {
+      joinCategories += userinfo[i]
+    } else {
+      joinCategories += userinfo[i] + ","
+    }
+  }
+  console.log(joinCategories)
+  return joinCategories
 }
 
 

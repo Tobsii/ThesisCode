@@ -25,12 +25,7 @@ function createPage(country, age, author, downloads, lastKlicked, categories) {
   getLastKlickedEntries(lastKlicked)
 }
 
-
-
-/* 
-PARSE AND MAP 
-verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
-*/
+// Variablen für die Werte aus den Nutzerprofilen
 var ownAge
 var ownCategories = ""
 var ownAuthor
@@ -42,6 +37,11 @@ var externAge
 var internCategories = ""
 var internLastKlicked = ""
 var internCountry
+/* 
+PARSE AND MAP 
+verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
+und gibt diese Werte anschließend an CreatePage()
+*/
 window.parseAndMap = function (cookie) {
 
   clearPage()
@@ -52,7 +52,7 @@ window.parseAndMap = function (cookie) {
 
   mapInternProfil(cookie)
 
-  // vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
+  // vergleiche Werte, die in mehreren Profilen vorkommen, um sie zusammenzuführen oder einen der Werte zu wählen
   var age = compareAllAges()
   var uniqueCategories = putCategoriesTogether()
   var country = compareAllCountries()
@@ -300,14 +300,8 @@ function mapEigenesProfil(cookie) {
       ownCountry = user.country
       var birthday = user.birthday.split(".")
       ownAge = calculate_age(birthday[1], birthday[0], birthday[2])
+      ownCategories = createCategoriesString(user.favoriteFood)
 
-      for (var i = 0; i < user.favoriteFood.length; i++) {
-        if (i == user.favoriteFood.length - 1) {
-          ownCategories += user.favoriteFood[i]
-        } else {
-          ownCategories += user.favoriteFood[i] + ","
-        }
-      }
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
 
@@ -353,24 +347,10 @@ function mapExternProfil(cookie) {
 function mapInternProfil(cookie) {
   internTrackingProfil.map(function (user) {
     if (user.id == cookie) {
-      internCategories = ""
       internCountry = user.country
+      internCategories = createCategoriesString(user.categories)
+      internLastKlicked = createCategoriesString(user.lastKlickedProduct)
 
-      for (var i = 0; i < user.categories.length; i++) {
-        if (i == user.categories.length - 1) {
-          internCategories += user.categories[i]
-        } else {
-          internCategories += user.categories[i] + ","
-        }
-      }
-
-      for (var i = 0; i < user.lastKlickedProduct.length; i++) {
-        if (i == user.lastKlickedProduct.length - 1) {
-          internLastKlicked += user.lastKlickedProduct[i]
-        } else {
-          internLastKlicked += user.lastKlickedProduct[i] + ","
-        }
-      }
       console.log("internData: " + internCategories, internLastKlicked, internCountry)
 
     } // end if
@@ -418,5 +398,19 @@ function putCategoriesTogether() {
 
   }
   return uniqueCategories
+}
+
+function createCategoriesString(userinfo) {
+  // damit Contentful damit arbeiten kann
+  var joinCategories = ""
+  for (var i = 0; i < userinfo.length; i++) {
+    if (i == userinfo.length - 1) {
+      joinCategories += userinfo[i]
+    } else {
+      joinCategories += userinfo[i] + ","
+    }
+  }
+  console.log(joinCategories)
+  return joinCategories
 }
 
