@@ -16138,135 +16138,13 @@ fragt Inhalte bei Contentful ab und baut daraus die Seite zusammen
 */
 function createPage(country, age, author, downloads, lastKlicked, categories){
 
-  // get single header
-  client.getEntry('4CeHNtbObY8Asg2WucGI4U')
-  .then(function(entry){
-    console.log(entry);
-    let header = entry.fields;
-    var source   = document.getElementById("templateHeader").innerHTML;
-    var template = Handlebars.compile(source);
-    header => console.log("In function header")
-      var context = {
-        title : header.headertitel, 
-        text: header.headertext,
-        imgURL : 'https:' + header.headerbild.fields.file.url, 
-        imgDescription : header.headerbild.fields.description
-      }
-      
-      var result = template(context);
-      document.getElementById("banner").innerHTML += result;
-    
-  })
-  .catch(console.error)
+  getBlogPost(author, categories)
 
+  getProdukte(categories)
 
-  // Get Beiträge
-  client.getEntries({
-    content_type: 'beitrag',
-    limit: 4,
-    "fields.autor.fields.autorenname": author,
-    "fields.autor.sys.contentType.sys.id":"autor"
-  })
-  .then(function(response){
-    console.log(response.items);
-    let beitrag = response.items;
-    buildPosts(beitrag);
+  getDownloads(downloads)
 
-    // Wenn nicht genug Beiträge den Kriterien entsprechen
-    if(beitrag.length < 4){ 
-      var missingItems = 4 - beitrag.length;
-
-      client.getEntries({
-        content_type: 'beitrag',
-        limit: missingItems,
-        'fields.tags[in]': categories,
-        "fields.autor.fields.autorenname[ne]": author,
-        "fields.autor.sys.contentType.sys.id":"autor"
-      })
-      .then(function(response){
-        let beitrag = response.items;
-        console.log(beitrag);
-    
-        buildPosts(beitrag);
-      })
-      .catch(console.error);
-    }
-  })
-  .catch(console.error)
-
-  // Get Produkte 
-  client.getEntries({
-    content_type: 'produkt',
-    limit: 8,
-    'fields.tags[in]': categories,
-  })
-  .then(function(response){
-    let produkt = response.items;
-    console.log(produkt); 
-
-    buildProducts(produkt);
-
-    // wenn nicht genug items mit der richtigen kategorie gefunden wurden, fülle random auf
-    if(produkt.length < 8){ 
-      var missingItems = 8 - produkt.length;
-
-      client.getEntries({
-        content_type: 'produkt',
-        limit: missingItems,
-      })
-      .then(function(response){
-        let produkt = response.items;
-        console.log(produkt);
-    
-        buildProducts(produkt);
-      })
-      .catch(console.error);
-    }
-  })
-  .catch(console.error);
-
-  // get Downloads
-  client.getEntries({
-    content_type: 'download',
-    limit: 3,
-    'sys.id[ne]': downloads
-  })
-  .then(function(response){
-    let download = response.items;
-    console.log(download);
-    buildDownloads(download);
-
-    // Wenn nicht genug Downloads den Kriterien entsprechen
-    if(download.length < 3){ 
-      var missingItems = 3 - download.length;
-
-      client.getEntries({
-        content_type: 'download',
-        limit: missingItems,
-      })
-      .then(function(response){
-        let download = response.items;
-        console.log(download);
-    
-        buildDownloads(download);
-      })
-      .catch(console.error);
-    }
-  })
-  .catch(console.error);
-
-  // Get last klicked Beiträge - sind immer 3
-  client.getEntries({
-    content_type: 'produkt',
-    limit : 3,
-    'sys.id[in]': lastKlicked,
-  })
-  .then(function(response){
-    let produktZuletzt = response.items;
-    console.log(produktZuletzt); 
-    buildLastProducts(produktZuletzt);   
-  })
-  .catch(console.error);
+  getLastKlickedEntries(lastKlicked)
 }
 
 //BUILD POSTS FUNCTION
@@ -16533,6 +16411,120 @@ function getCountry (language){
       return 'Germany'
   }
 }
+
+function getBlogPost(author, categories){
+  client.getEntries({
+    content_type: 'beitrag',
+    limit: 4,
+    "fields.autor.fields.autorenname": author,
+    "fields.autor.sys.contentType.sys.id":"autor"
+  })
+  .then(function(response){
+    console.log(response.items);
+    let beitrag = response.items;
+    buildPosts(beitrag);
+
+    // Wenn nicht genug Beiträge den Kriterien entsprechen
+    if(beitrag.length < 4){ 
+      var missingItems = 4 - beitrag.length;
+
+      client.getEntries({
+        content_type: 'beitrag',
+        limit: missingItems,
+        'fields.tags[in]': categories,
+        "fields.autor.fields.autorenname[ne]": author,
+        "fields.autor.sys.contentType.sys.id":"autor"
+      })
+      .then(function(response){
+        let beitrag = response.items;
+        console.log(beitrag);
+    
+        buildPosts(beitrag);
+      })
+      .catch(console.error);
+    }
+  })
+  .catch(console.error)
+}
+
+function getProdukte(categories){
+  client.getEntries({
+    content_type: 'produkt',
+    limit: 8,
+    'fields.tags[in]': categories,
+  })
+  .then(function(response){
+    let produkt = response.items;
+    console.log(produkt); 
+
+    buildProducts(produkt);
+
+    // wenn nicht genug items mit der richtigen kategorie gefunden wurden, fülle random auf
+    if(produkt.length < 8){ 
+      var missingItems = 8 - produkt.length;
+
+      client.getEntries({
+        content_type: 'produkt',
+        limit: missingItems,
+      })
+      .then(function(response){
+        let produkt = response.items;
+        console.log(produkt);
+    
+        buildProducts(produkt);
+      })
+      .catch(console.error);
+    }
+  })
+  .catch(console.error);
+}
+
+function getDownloads(downloads){
+  client.getEntries({
+    content_type: 'download',
+    limit: 3,
+    'sys.id[ne]': downloads
+  })
+  .then(function(response){
+    let download = response.items;
+    console.log(download);
+    buildDownloads(download);
+
+    // Wenn nicht genug Downloads den Kriterien entsprechen
+    if(download.length < 3){ 
+      var missingItems = 3 - download.length;
+
+      client.getEntries({
+        content_type: 'download',
+        limit: missingItems,
+      })
+      .then(function(response){
+        let download = response.items;
+        console.log(download);
+    
+        buildDownloads(download);
+      })
+      .catch(console.error);
+    }
+  })
+  .catch(console.error);
+}
+
+function getLastKlickedEntries(lastKlicked){
+    client.getEntries({
+      content_type: 'produkt',
+      limit : 3,
+      'sys.id[in]': lastKlicked,
+    })
+    .then(function(response){
+      let produktZuletzt = response.items;
+      console.log(produktZuletzt); 
+      buildLastProducts(produktZuletzt);   
+    })
+    .catch(console.error);
+}
+
+
 },{"../json/eigenesProfil.json":67,"../json/externProfil.json":68,"../json/internTrackingProfil.json":69,"contentful":70,"handlebars":100}],67:[function(require,module,exports){
 module.exports=[
     {
@@ -16627,11 +16619,11 @@ module.exports=[
     "education" : "medium",
     "income" : "average",
     "intent" : "move to house",
-    "buys" : ["snacks", "new food brands", "sweets"],
-    "buysOnline" : ["fashion", "Jewelly and watches", "Beauty & care"],
-    "ProductInterests": ["baby products", "dating", "DIY products"],
-    "affinities" : ["family", "food", "movies"],
-    "devices" : ["smartphone", "tablet"]
+    "buys" : ["Snacks", "New Food Brands", "Sweets"],
+    "buysOnline" : ["Fashion", "Jewelly And Watches", "Beauty & Care"],
+    "ProductInterests": ["Baby Products", "Dating", "DIY Products"],
+    "affinities" : ["Family", "Food", "Movies"],
+    "devices" : ["Smartphone", "Tablet"]
 },
 {
     "id" : "2",
@@ -16644,11 +16636,11 @@ module.exports=[
     "education" : "medium",
     "income" : "low",
     "intent" : "move to flat",
-    "buys" : ["snacks", "computer and software", "fast food"],
-    "buysOnline" : ["computer and software", "travel services", "tickets"],
-    "ProductInterests": ["Consumer electronics", "software", "sport"],
-    "affinities" : ["sports", "holidays", "entertainment media"],
-    "devices" : ["smartphone", "tablet"]
+    "buys" : ["Snacks", "Computer and Software", "Fast Food"],
+    "buysOnline" : ["Computer And Software", "Travel Services", "Tickets"],
+    "ProductInterests": ["Consumer Electronics", "Software", "Sport"],
+    "affinities" : ["Sports", "Holidays", "Entertainment Media"],
+    "devices" : ["Smartphone", "Tablet"]
 },
 {
     "id" : "3",
@@ -16661,11 +16653,11 @@ module.exports=[
     "education" : "medium",
     "income" : "average",
     "intent" : "0",
-    "buys" : ["fruit", "sweets", "household items"],
-    "buysOnline" : ["household items", "pet supplies", "optics"],
+    "buys" : ["Fruit", "Sweets", "Household Items"],
+    "buysOnline" : ["Household Items", "Pet Supplies", "Optics"],
     "ProductInterests": ["pets", "health", "travel"],
-    "affinities" : ["local", "weather", "politics"],
-    "devices" : ["smartphone", "tablet"]
+    "affinities" : ["Local", "Weather", "Politics"],
+    "devices" : ["Smartphone", "Tablet"]
 },
 {
     "id" : "4",
@@ -16678,11 +16670,11 @@ module.exports=[
     "education" : "medium",
     "income" : "high",
     "intent" : "buy a car",
-    "buys" : ["brand name food", "healthy food", "furniture"],
-    "buysOnline" : ["food", "education", "computer"],
-    "ProductInterests": ["dating", "health", "investment"],
-    "affinities" : ["books", "science", "e-commerce"],
-    "devices" : ["tablet"]
+    "buys" : ["Brand Name Food", "Healthy food", "Low-Carb"],
+    "buysOnline" : ["Food", "Education", "Computer"],
+    "ProductInterests": ["Dating", "Health", "Investment"],
+    "affinities" : ["Books", "Science", "E-commerce"],
+    "devices" : ["Tablet"]
 }
 
 ]

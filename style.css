@@ -45,26 +45,10 @@
     margin-bottom: 30px;
 }
 
-@media only screen and (min-width: 820px) {
-    .banner-area{
-        height: 410px;
-    }
-  }
+.btn{
+    margin-top: 10px;
+}
 
-  @media only screen and (min-width: 1010px) {
-    .banner-area{
-        height: 490px;
-    }
-  }
-
-  @media only screen and (min-width: 1250px) {
-    .banner-area{
-        height: 600px;
-    }
-  }
-
-  @media only screen and (min-width: 1540px) {
-    .banner-area{
-        height: 700px;
-    }
-  }
+.badge{
+    margin-left: 10px;
+}
