@@ -25,227 +25,37 @@ function createPage(country, age, author, downloads, lastKlicked, categories) {
   getLastKlickedEntries(lastKlicked)
 }
 
-function buildPosts(beitrag) {
-  var source = document.getElementById("templatePost").innerHTML;
-  var template = Handlebars.compile(source);
-  return beitrag.map(function (beitrag) {
-    var context = {
-      title: beitrag.fields.beitragstitel,
-      text: beitrag.fields.beitragstext,
-      imgURL: 'https:' + beitrag.fields.beitragsbild.fields.file.url,
-      imgDescription: beitrag.fields.beitragsbild.fields.description,
-      autorName: beitrag.fields.autor.fields.autorenname,
-      imgAutorURL: 'https:' + beitrag.fields.autor.fields.autorenbild.fields.file.url,
-      tags: beitrag.fields.beitragstags[0].fields.name + ", " + beitrag.fields.beitragstags[1].fields.name + ", " + beitrag.fields.beitragstags[2].fields.name,
-      tagsNeu: beitrag.fields.tags[0] + ", " + beitrag.fields.tags[1] + ", " + beitrag.fields.tags[2],
-    }
 
-    var result = template(context)
-    document.getElementById("blog").innerHTML += result
-  })
-}
-
-function buildDownloads(download) {
-  var source = document.getElementById("templateDownload").innerHTML;
-  var template = Handlebars.compile(source);
-  return download.map(function (download) {
-    var context = {
-      title: download.fields.downloadtitel,
-      text: download.fields.downloadbeschreibung,
-      linkToFile: 'https:' + download.fields.downloaditem.fields.file.url,
-      tags: download.fields.downloadtags[0].fields.name + " , " + download.fields.downloadtags[1].fields.name + " , " + download.fields.downloadtags[2].fields.name + " , " + download.fields.downloadtags[3].fields.name + " , " + download.fields.downloadtags[4].fields.name,
-      tagsNeu: download.fields.tags[0] + ", " + download.fields.tags[1] + ", " + download.fields.tags[2],
-    }
-    var result = template(context);
-    document.getElementById("downloads").innerHTML += result;
-  })
-}
-
-function buildProducts(produkt) {
-  var source = document.getElementById("templateProdukt").innerHTML;
-  var template = Handlebars.compile(source);
-  return produkt.map(function (produkt) {
-    var context = {
-      title: produkt.fields.produktname,
-      text: produkt.fields.produktbeschreibung,
-      price: produkt.fields.produktpreis,
-      kalorien: produkt.fields.produktkalorien,
-      imgURL: 'https:' + produkt.fields.produktbild.fields.file.url,
-      imgDescription: produkt.fields.produktbild.fields.description,
-      tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
-      nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
-      art: produkt.fields.produktart[0].fields.artname,
-      besonderheit: produkt.fields.produktbesonderheit[0].fields.bezeichnung,
-      tagsNeu: produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
-    }
-    var result = template(context);
-    document.getElementById("produkte").innerHTML += result;
-  })
-}
-
-function buildLastProducts(produkt) {
-  var source = document.getElementById("templateZuletztAngeschaut").innerHTML;
-  var template = Handlebars.compile(source);
-  return produkt.map(function (produkt) {
-    var context = {
-      title: produkt.fields.produktname,
-      text: produkt.fields.produktbeschreibung,
-      price: produkt.fields.produktpreis,
-      kalorien: produkt.fields.produktkalorien,
-      imgURL: 'https:' + produkt.fields.produktbild.fields.file.url,
-      imgDescription: produkt.fields.produktbild.fields.description,
-      tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
-      nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
-      art: produkt.fields.produktart[0].fields.artname,
-      besonderheit: produkt.fields.produktbesonderheit[0].fields.bezeichnung,
-      tagsNeu: produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
-    }
-    var result = template(context);
-    document.getElementById("zuletztAngeschaut").innerHTML += result;
-  })
-}
 
 /* 
 PARSE AND MAP 
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
 */
+var ownAge
+var ownCategories = ""
+var ownAuthor
+var ownDownloads
+var ownCountry
+var externCategories = ""
+var externCountry
+var externAge
+var internCategories = ""
+var internLastKlicked = ""
+var internCountry
 window.parseAndMap = function (cookie) {
 
-  var ownAge
-  var ownCategories = ""
-  var ownAuthor
-  var ownDownloads
-  var ownCountry
+  clearPage()
 
-  eigenesProfil.map(function (user) {
-    if (user.id == cookie) {
-      ownAuthor = user.favoriteAuthor
-      ownDownloads = user.downloads
-      ownCountry = user.country
-      var birthday = user.birthday.split(".")
-      ownAge = calculate_age(birthday[1], birthday[0], birthday[2])
+  mapEigenesProfil(cookie)
 
-      for (var i = 0; i < user.favoriteFood.length; i++) {
-        if (i == user.favoriteFood.length - 1) {
-          ownCategories += user.favoriteFood[i]
-        } else {
-          ownCategories += user.favoriteFood[i] + ","
-        }
-      }
-      console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
-    } // end if
+  mapExternProfil(cookie)
 
-  })
-
-  var externCategories = ""
-  var externCountry
-  var externAge
-
-  externTrackingProfil.map(function (user) {
-    if (user.id == cookie) {
-      var tagArray = ['Frühstück', 'Pizza', 'Pasta', 'Vegetarisch', 'Scharf', 'Mexikanisch', 'Gebäck', 'Snack', 'Low-Carb', 'Asiastisch', 'Leicht', 'Vegan', 'Fleisch', 'Abend', 'Deftig', 'Hauptmahlzeit', 'Italienisch']
-      externCountry = getCountry(user.language)
-      externAge = user.age
-      user.buys.map(function (cat) {
-        if (tagArray.indexOf(cat) >= 0) {
-          externCategories = externCategories + cat + ", "
-        }
-      })
-      console.log("Array" + user.buysOnline)
-      user.buysOnline.map(function (cat) {
-        if (tagArray.indexOf(cat) >= 0)
-          externCategories = externCategories + cat + ", "
-      })
-
-      user.buysOnline.map(function (cat) {
-        if (tagArray.indexOf(cat) >= 0)
-          externCategories = externCategories + cat + ", "
-      })
-
-      user.buysOnline.map(function (cat) {
-        if (tagArray.indexOf(cat) >= 0)
-          externCategories = externCategories + cat + ", "
-      })
-      // usw. - reicht erstmal als beispiel
-
-      if (user.parent == 1) {
-        externCategories = externCategories + "Pizza, Pasta, Gebäck, "
-      }
-      // usw. - mapping für andere Dinge nur im Text beschreiben
-      console.log("extern Data: " + externCategories, externCountry)
-    }
-
-  })
-
-  var internCategories = ""
-  var internLastKlicked = ""
-  var internCountry
-
-  internTrackingProfil.map(function (user) {
-    if (user.id == cookie) {
-      internCategories = ""
-      internCountry = user.country
-
-      for (var i = 0; i < user.categories.length; i++) {
-        if (i == user.categories.length - 1) {
-          internCategories += user.categories[i]
-        } else {
-          internCategories += user.categories[i] + ","
-        }
-      }
-
-      for (var i = 0; i < user.lastKlickedProduct.length; i++) {
-        if (i == user.lastKlickedProduct.length - 1) {
-          internLastKlicked += user.lastKlickedProduct[i]
-        } else {
-          internLastKlicked += user.lastKlickedProduct[i] + ","
-        }
-      }
-      console.log("internData: " + internCategories, internLastKlicked, internCountry)
-
-    } // end if
-  })
+  mapInternProfil(cookie)
 
   // vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
-  var age
-  var allCategories
-  var country
-  if (ownCountry != "") {
-    country = ownCountry
-  } else {
-    if (internCountry != "") {
-      country = internCountry
-    } else {
-      if (externCountry != "") {
-        country = externCountry
-      } else {
-        country = "default"
-      }
-    }
-  }
-
-  // meist wird beim Personalisieren ein altersbereich angegeben, deshalb nehme ich hier den Bereich aus dem Tool, sofern er mit dem Alter im eigenen Nuterprofil übereinstimmt
-  var externStartEndAge = externAge.split("-")
-  if (ownAge < externStartEndAge[0] || ownAge > externStartEndAge[1]) {
-    age = ownAge
-  } else {
-    age = externAge
-  }
-
-  var uniqueCategories
-  // füge alle Kategorien zu einem String zusammen
-  if (ownCategories == "" && externCategories == "" && internCategories == "") {
-    allCategories = "default"
-  } else {
-    allCategories = ownCategories + ", " + externCategories + internCategories
-
-    // entferne Dublikate
-    uniqueCategories = allCategories.split(',').filter(function (item, i, allItems) {
-      return i == allItems.indexOf(item);
-    }).join(',');
-
-  }
-
+  var age = compareAllAges()
+  var uniqueCategories = putCategoriesTogether()
+  var country = compareAllCountries()
 
   console.log("Übergabewerte an Create Page: " + country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
   createPage(country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
@@ -393,5 +203,220 @@ function getLastKlickedEntries(lastKlicked) {
       buildLastProducts(produktZuletzt)
     })
     .catch(console.error);
+}
+
+function buildPosts(beitrag) {
+  var source = document.getElementById("templatePost").innerHTML;
+  var template = Handlebars.compile(source);
+  return beitrag.map(function (beitrag) {
+    var context = {
+      title: beitrag.fields.beitragstitel,
+      text: beitrag.fields.beitragstext,
+      imgURL: 'https:' + beitrag.fields.beitragsbild.fields.file.url,
+      imgDescription: beitrag.fields.beitragsbild.fields.description,
+      autorName: beitrag.fields.autor.fields.autorenname,
+      imgAutorURL: 'https:' + beitrag.fields.autor.fields.autorenbild.fields.file.url,
+      tags: beitrag.fields.beitragstags[0].fields.name + ", " + beitrag.fields.beitragstags[1].fields.name + ", " + beitrag.fields.beitragstags[2].fields.name,
+      tagsNeu: beitrag.fields.tags[0] + ", " + beitrag.fields.tags[1] + ", " + beitrag.fields.tags[2],
+    }
+
+    var result = template(context)
+    document.getElementById("blog").innerHTML += result
+  })
+}
+
+function buildDownloads(download) {
+  var source = document.getElementById("templateDownload").innerHTML;
+  var template = Handlebars.compile(source);
+  return download.map(function (download) {
+    var context = {
+      title: download.fields.downloadtitel,
+      text: download.fields.downloadbeschreibung,
+      linkToFile: 'https:' + download.fields.downloaditem.fields.file.url,
+      tags: download.fields.downloadtags[0].fields.name + " , " + download.fields.downloadtags[1].fields.name + " , " + download.fields.downloadtags[2].fields.name + " , " + download.fields.downloadtags[3].fields.name + " , " + download.fields.downloadtags[4].fields.name,
+      tagsNeu: download.fields.tags[0] + ", " + download.fields.tags[1] + ", " + download.fields.tags[2],
+    }
+    var result = template(context);
+    document.getElementById("downloads").innerHTML += result;
+  })
+}
+
+function buildProducts(produkt) {
+  var source = document.getElementById("templateProdukt").innerHTML;
+  var template = Handlebars.compile(source);
+  return produkt.map(function (produkt) {
+    var context = {
+      title: produkt.fields.produktname,
+      text: produkt.fields.produktbeschreibung,
+      price: produkt.fields.produktpreis,
+      kalorien: produkt.fields.produktkalorien,
+      imgURL: 'https:' + produkt.fields.produktbild.fields.file.url,
+      imgDescription: produkt.fields.produktbild.fields.description,
+      tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
+      nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
+      art: produkt.fields.produktart[0].fields.artname,
+      besonderheit: produkt.fields.produktbesonderheit[0].fields.bezeichnung,
+      tagsNeu: produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
+    }
+    var result = template(context);
+    document.getElementById("produkte").innerHTML += result;
+  })
+}
+
+function buildLastProducts(produkt) {
+  var source = document.getElementById("templateZuletztAngeschaut").innerHTML;
+  var template = Handlebars.compile(source);
+  return produkt.map(function (produkt) {
+    var context = {
+      title: produkt.fields.produktname,
+      text: produkt.fields.produktbeschreibung,
+      price: produkt.fields.produktpreis,
+      kalorien: produkt.fields.produktkalorien,
+      imgURL: 'https:' + produkt.fields.produktbild.fields.file.url,
+      imgDescription: produkt.fields.produktbild.fields.description,
+      tags: produkt.fields.produkttags[0].fields.name + ", " + produkt.fields.produkttags[1].fields.name + ", " + produkt.fields.produkttags[2].fields.name,
+      nationalitaet: produkt.fields.produktnationalitaet[0].fields.region,
+      art: produkt.fields.produktart[0].fields.artname,
+      besonderheit: produkt.fields.produktbesonderheit[0].fields.bezeichnung,
+      tagsNeu: produkt.fields.tags[0] + ", " + produkt.fields.tags[1] + ", " + produkt.fields.tags[2],
+    }
+    var result = template(context);
+    document.getElementById("zuletztAngeschaut").innerHTML += result;
+  })
+}
+
+function clearPage() {
+  document.getElementById("blog").innerHTML = ""
+  document.getElementById("downloads").innerHTML = ""
+  document.getElementById("produkte").innerHTML = ""
+  document.getElementById("zuletztAngeschaut").innerHTML = ""
+}
+
+function mapEigenesProfil(cookie) {
+  eigenesProfil.map(function (user) {
+    if (user.id == cookie) {
+      ownAuthor = user.favoriteAuthor
+      ownDownloads = user.downloads
+      ownCountry = user.country
+      var birthday = user.birthday.split(".")
+      ownAge = calculate_age(birthday[1], birthday[0], birthday[2])
+
+      for (var i = 0; i < user.favoriteFood.length; i++) {
+        if (i == user.favoriteFood.length - 1) {
+          ownCategories += user.favoriteFood[i]
+        } else {
+          ownCategories += user.favoriteFood[i] + ","
+        }
+      }
+      console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
+    } // end if
+
+  })
+}
+
+function mapExternProfil(cookie) {
+  externTrackingProfil.map(function (user) {
+    if (user.id == cookie) {
+      var tagArray = ['Frühstück', 'Pizza', 'Pasta', 'Vegetarisch', 'Scharf', 'Mexikanisch', 'Gebäck', 'Snack', 'Low-Carb', 'Asiastisch', 'Leicht', 'Vegan', 'Fleisch', 'Abend', 'Deftig', 'Hauptmahlzeit', 'Italienisch']
+      externCountry = getCountry(user.language)
+      externAge = user.age
+      user.buys.map(function (cat) {
+        if (tagArray.indexOf(cat) >= 0) {
+          externCategories = externCategories + cat + ", "
+        }
+      })
+      console.log("Array" + user.buysOnline)
+      user.buysOnline.map(function (cat) {
+        if (tagArray.indexOf(cat) >= 0)
+          externCategories = externCategories + cat + ", "
+      })
+
+      user.buysOnline.map(function (cat) {
+        if (tagArray.indexOf(cat) >= 0)
+          externCategories = externCategories + cat + ", "
+      })
+
+      user.buysOnline.map(function (cat) {
+        if (tagArray.indexOf(cat) >= 0)
+          externCategories = externCategories + cat + ", "
+      })
+
+      if (user.parent == 1) {
+        externCategories = externCategories + "Pizza, Pasta, Gebäck, "
+      }
+      console.log("extern Data: " + externCategories, externCountry)
+    }
+
+  })
+}
+
+function mapInternProfil(cookie) {
+  internTrackingProfil.map(function (user) {
+    if (user.id == cookie) {
+      internCategories = ""
+      internCountry = user.country
+
+      for (var i = 0; i < user.categories.length; i++) {
+        if (i == user.categories.length - 1) {
+          internCategories += user.categories[i]
+        } else {
+          internCategories += user.categories[i] + ","
+        }
+      }
+
+      for (var i = 0; i < user.lastKlickedProduct.length; i++) {
+        if (i == user.lastKlickedProduct.length - 1) {
+          internLastKlicked += user.lastKlickedProduct[i]
+        } else {
+          internLastKlicked += user.lastKlickedProduct[i] + ","
+        }
+      }
+      console.log("internData: " + internCategories, internLastKlicked, internCountry)
+
+    } // end if
+  })
+}
+
+function compareAllCountries() {
+  if (ownCountry != "") {
+    return ownCountry
+  } else {
+    if (internCountry != "") {
+      return internCountry
+    } else {
+      if (externCountry != "") {
+        country = externCountry
+      } else {
+        return "default"
+      }
+    }
+  }
+}
+
+function compareAllAges() {
+  // meist wird beim Personalisieren ein Altersbereich angegeben, deshalb nehme ich hier den Bereich aus dem Tool, sofern er mit dem Alter im eigenen Nuterprofil übereinstimmt
+  var externStartEndAge = externAge.split("-")
+  if (ownAge < externStartEndAge[0] || ownAge > externStartEndAge[1]) {
+    return ownAge
+  } else {
+    return externAge
+  }
+}
+
+function putCategoriesTogether() {
+  var allCategories
+  // füge alle Kategorien zu einem String zusammen
+  if (ownCategories == "" && externCategories == "" && internCategories == "") {
+    allCategories = "default"
+  } else {
+    allCategories = ownCategories + "," + externCategories + internCategories
+
+    // entferne Dublikate
+    uniqueCategories = allCategories.split(',').filter(function (item, i, allItems) {
+      return i == allItems.indexOf(item);
+    }).join(',');
+
+  }
+  return uniqueCategories
 }
 
