@@ -16162,8 +16162,10 @@ var internCountry
 /* 
 PARSE AND MAP 
 verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann 
+und gibt diese Werte anschließend an CreatePage()
 */
 window.parseAndMap = function (cookie) {
+  console.log("cookie: "+ cookie)
 
   clearPage()
 
@@ -16173,7 +16175,7 @@ window.parseAndMap = function (cookie) {
 
   mapInternProfil(cookie)
 
-  // vergleiche Werte, die in mehreren Profilen vorkommen, dann: Zusammenführen oder eins wählen
+  // vergleiche Werte, die in mehreren Profilen vorkommen, um sie zusammenzuführen oder einen der Werte zu wählen
   var age = compareAllAges()
   var uniqueCategories = putCategoriesTogether()
   var country = compareAllCountries()
@@ -16226,7 +16228,7 @@ function getBlogPost(author, categories) {
       let beitrag = response.items;
       buildPosts(beitrag);
 
-      // Wenn nicht genug Beiträge den Kriterien entsprechen
+      // Wenn nicht genug Beiträge mit den geforderten Kategorien gefunden wurden
       if (beitrag.length < 4) {
         var missingItems = 4 - beitrag.length;
 
@@ -16521,7 +16523,8 @@ function putCategoriesTogether() {
   return uniqueCategories
 }
 
-function createCategoriesString(userinfo){
+function createCategoriesString(userinfo) {
+  // damit Contentful damit arbeiten kann
   var joinCategories = ""
   for (var i = 0; i < userinfo.length; i++) {
     if (i == userinfo.length - 1) {
@@ -16532,6 +16535,12 @@ function createCategoriesString(userinfo){
   }
   console.log(joinCategories)
   return joinCategories
+}
+
+window.getCookieId = function (){
+  var selectedCookie = document.getElementById("userCookie").value
+  document.getElementById("currentCookie").innerHTML = "Current User Cookie ID: " + selectedCookie
+  parseAndMap(selectedCookie);
 }
 
 

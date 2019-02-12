@@ -43,6 +43,7 @@ verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann
 und gibt diese Werte anschließend an CreatePage()
 */
 window.parseAndMap = function (cookie) {
+  console.log("cookie: "+ cookie)
 
   clearPage()
 
@@ -105,7 +106,7 @@ function getBlogPost(author, categories) {
       let beitrag = response.items;
       buildPosts(beitrag);
 
-      // Wenn nicht genug Beiträge den Kriterien entsprechen
+      // Wenn nicht genug Beiträge mit den geforderten Kategorien gefunden wurden
       if (beitrag.length < 4) {
         var missingItems = 4 - beitrag.length;
 
@@ -412,5 +413,11 @@ function createCategoriesString(userinfo) {
   }
   console.log(joinCategories)
   return joinCategories
+}
+
+window.getCookieId = function (){
+  var selectedCookie = document.getElementById("userCookie").value
+  document.getElementById("currentCookie").innerHTML = "Current User Cookie ID: " + selectedCookie
+  parseAndMap(selectedCookie);
 }
 

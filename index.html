@@ -6,15 +6,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Personalisierung Headless</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" media="screen" href="style.css" />
 </head>
 
 <body>
 
 	<header id="header">
-		<p>Current User: </p>
+		<p id="currentCookie"></p>
 	</header>
 
 	<section class="info">
@@ -29,18 +29,15 @@
 					ausgewählt werden, welche verschiedene Nutzer simuliert.
 				</p>
 				<hr class="my-4">
-				<form>
 					<p>Wähle den Nutzer: </p>
-					<select class="form-control">
-						<option>Nutzer mit Cookie-ID 0</option>
-						<option>Nutzer mit Cookie-ID 1</option>
-						<option>Nutzer mit Cookie-ID 2</option>
-						<option>Nutzer mit Cookie-ID 3</option>
-						<option>Nutzer mit Cookie-ID 4</option>
+					<select class="form-control" id="userCookie">
+						<option value="0">Nutzer mit Cookie-ID 0</option>
+						<option value="1">Nutzer mit Cookie-ID 1</option>
+						<option value="2">Nutzer mit Cookie-ID 2</option>
+						<option value="3">Nutzer mit Cookie-ID 3</option>
+						<option value="4">Nutzer mit Cookie-ID 4</option>
 					</select>
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</form>
-
+					<button class="btn btn-primary" onclick="getCookieId()">Submit</button>
 			</div>
 		</div>
 	</section>
@@ -86,21 +83,22 @@
 
 	<!-- BANNER -->
 
-
 	<!-- PRODUKT -->
 	<script id="templateProdukt" type="text/x-handlebars-template">
-        <div class="col-lg-3 col-md-6" onclick="getTags(this)">
-			<div class="produktThumb">
-				<img src="{{{imgURL}}}" alt="{{imgDescription}}" class="img-fluid">
-			</div>
-			<div class="produktDetails">
-				<h3>{{title}}<span class="badge badge-secondary">{{price}}€</span></h3>
-				<p>Kalorien: {{kalorien}}</p>
-				<p>{{text}}</p>
-				<p>Nationalität: {{nationalitaet}}</p>
-				<p>Art : {{art}}</p>
-				<p>Besonderheit : {{besonderheit}}</p>
-				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
+		<div class="col-lg-3 col-md-6" onclick="getTags(this)">
+			<div class="produkt">
+				<div class="produktThumb">
+					<img src="{{{imgURL}}}" alt="{{imgDescription}}" class="img-fluid">
+				</div>
+				<div class="produktDetails">
+					<h3>{{title}}<span class="badge badge-secondary">{{price}}€</span></h3>
+					<p>Kalorien: {{kalorien}}</p>
+					<p>{{text}}</p>
+					<p>Nationalität: {{nationalitaet}}</p>
+					<p>Art : {{art}}</p>
+					<p>Besonderheit : {{besonderheit}}</p>
+					<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
+				</div>
 			</div>
 		</div>
 	</script>
@@ -158,8 +156,8 @@
 	<!-- END HANDLEBARS TEMPLATES -->
 
 	<script>
-		var usercookie = 4
-		parseAndMap(usercookie)
+		// on first Page Load Cookie is 0
+		getCookieId();
 	</script>
 
 </body>
