@@ -16235,7 +16235,7 @@ function getBlogPost(author, categories) {
         client.getEntries({
           content_type: 'beitrag',
           limit: missingItems,
-          'fields.tags[in]': categories,
+          //'fields.tags[in]': categories,
           "fields.autor.fields.autorenname[ne]": author,
           "fields.autor.sys.contentType.sys.id": "autor"
         })
@@ -16424,7 +16424,6 @@ function mapEigenesProfil(cookie) {
       var birthday = user.birthday.split(".")
       ownAge = calculate_age(birthday[1], birthday[0], birthday[2])
       ownCategories = createCategoriesString(user.favoriteFood)
-
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
 
@@ -16473,9 +16472,7 @@ function mapInternProfil(cookie) {
       internCountry = user.country
       internCategories = createCategoriesString(user.categories)
       internLastKlicked = createCategoriesString(user.lastKlickedProduct)
-
       console.log("internData: " + internCategories, internLastKlicked, internCountry)
-
     } // end if
   })
 }
@@ -16518,7 +16515,6 @@ function putCategoriesTogether() {
     uniqueCategories = allCategories.split(',').filter(function (item, i, allItems) {
       return i == allItems.indexOf(item);
     }).join(',');
-
   }
   return uniqueCategories
 }

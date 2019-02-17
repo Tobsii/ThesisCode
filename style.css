@@ -52,3 +52,18 @@
 .badge{
     margin-left: 10px;
 }
+
+.persoInfo{
+    border: 2px solid blue;
+    padding: 20px;
+}
+
+.persoBase{
+    color: red;
+    border: 1px solid red;
+    padding: 3px;
+}
+
+body{
+    padding-bottom: 10px;
+}

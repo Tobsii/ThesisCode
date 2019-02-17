@@ -23,51 +23,105 @@
 				<h1 class="display-4">Hinweise</h1>
 				<p class="lead">
 					Diese Webseite zeigt personalisierte Inhalte aus dem Headless CMS "Contentful".
-					Personalisierte Inhalte sind blau umrandet. Außerdem steht bei jedem Inhalt,
-					wieso er personalisiert wurde. Diese Daten sind rot umrandet und stehen außerdem
-					in einem Kästchen drunter. Im Formular unten kann ein Nutzer bzw eine Cookie-Id
-					ausgewählt werden, welche verschiedene Nutzer simuliert.
+					Unter jedem Inhalt steht (blau umrandet), weshalb er personalisiert wurde. Die Parameter,
+					die mit den Nutzerpräferenzen verglichen wurden sind in einigen Inhalten rot markiert. Inhalte,
+					bei welchen diese Markierung fehlt, wurden aufgrund ihrer ID ausgewählt.
+					Im Formular unten kann ein Nutzer bzw eine Cookie-Id ausgewählt werden, welche
+					verschiedene Nutzer simuliert.
 				</p>
 				<hr class="my-4">
-					<p>Wähle den Nutzer: </p>
-					<select class="form-control" id="userCookie">
-						<option value="0">Nutzer mit Cookie-ID 0</option>
-						<option value="1">Nutzer mit Cookie-ID 1</option>
-						<option value="2">Nutzer mit Cookie-ID 2</option>
-						<option value="3">Nutzer mit Cookie-ID 3</option>
-						<option value="4">Nutzer mit Cookie-ID 4</option>
-					</select>
-					<button class="btn btn-primary" onclick="getCookieId()">Submit</button>
+				<p>Wähle den Nutzer: </p>
+				<select class="form-control" id="userCookie">
+					<option value="0">Nutzer mit Cookie-ID 0</option>
+					<option value="1">Nutzer mit Cookie-ID 1</option>
+					<option value="2">Nutzer mit Cookie-ID 2</option>
+					<option value="3">Nutzer mit Cookie-ID 3</option>
+					<option value="4">Nutzer mit Cookie-ID 4</option>
+				</select>
+				<button class="btn btn-primary" onclick="getCookieId()">Senden</button>
 			</div>
 		</div>
 	</section>
 
 	<section class="produkte-area">
-		<h2 class="text-center">Produke</h3>
-			<div class="container">
-				<div class="row" id="produkte"></div>
+		<div class="container">
+			<h2 class="text-center">Produke</h2>
+			<div class="row" id="produkte"></div>
+			<div class="row">
+				<div class="persoInfo">
+					<p>
+						Die Produkte werden basierend auf Angaben aus allen 3 Profilen personalisiert:
+						<ul>
+							<li>
+								im vom Nutzer selbst angelegten Profil finden sich Informationen zu
+								seinem Lieblingsessen. Diese Inforationen entsprechen den verwendeten
+								Tags im Headless CMS.
+							</li>
+							<li>
+								im Profil, welches beim Tracking des Nutzers auf der Seite selbst erstellt
+								wurde, sind Inormationen, über die meistgeklickten Tags zu finden. Diese
+								entsprechen ebenfalls den im Headless CMS verwendeten Tags.
+							</li>
+							<li>
+								aus dem Profil des externen Personalisierungstools werden alle Interessen des
+								Nutzers ausgelesen und es wird überprüft, ob eine oder mehrere davon einem Tag
+								aus dem Headless CMS entsprechen.
+							</li>
+						</ul>
+						Falls nicht genug Produkte mit den passenden Tags gefunden wurden, um alle Slots
+						zu füllen, werden die übrigen Slots mit Produkten mit anderen Tags aufgefüllt.
+					</p>
+				</div>
 			</div>
+		</div>
 	</section>
 
 	<section class="blog-area">
 		<div class="container">
-			<h2 class="text-center">Blogbeiträge</h3>
-				<div class="row" id="blog"></div>
+			<h2 class="text-center">Blogbeiträge</h2>
+			<div class="row" id="blog"></div>
+			<div class="row">
+				<div class="persoInfo">
+					<p>Die Blogbeiträge werden basierend auf den Angaben zum Lieblingsautor im
+						persönlichen Profil des Nutzers personalisiert. Wenn nicht genügend Beiträge
+						des passenden Autors vorhanden sind, um alle 4 Slots zu füllen, werden für
+						die fehlenden Slots Beiträge von anderen Autoren geladen.</p>
+				</div>
+			</div>
 		</div>
 	</section>
 
 	<section class="download-area">
 		<div class="container">
-			<h2 class="text-center">Downloads</h3>
-				<div class="row" id="downloads"></div>
+			<h2 class="text-center">Downloads</h2>
+			<div class="row" id="downloads"></div>
+			<div class="row">
+				<div class="persoInfo">
+					<p>
+						Die Downloads werden basierend auf Angaben im eigenen Profil des Nutzers
+						personalisiert. Dort werden die Ids aller Downloads, die der Nutzer schon
+						getätigt hat, abgespeichert. Es werden dann nur Items angezeigt, die der
+						Nutzer noch nicht herunter geladen hat.
+					</p>
+				</div>
+			</div>
 		</div>
 	</section>
 
 	<section class="zuletztAngeschaut-area">
-		<h2 class="text-center">Zuletzt angeschaute Beiträge</h3>
-			<div class="container">
-				<div class="row" id="zuletztAngeschaut"></div>
+		<h2 class="text-center">Zuletzt angeschaute Beiträge</h2>
+		<div class="container">
+			<div class="row" id="zuletztAngeschaut"></div>
+			<div class="row">
+				<div class="persoInfo">
+					<p>
+						Dieser Abschnitt wird basierend auf Informationen aus dem seiteninternen
+						Tracking personalisiert. Dort werden die IDs der 3 Produkte, die
+						der Nutzer zuletzt angeklickt hat, abgespeichert. Diese werden dann hier angezeigt.
+					</p>
+				</div>
 			</div>
+		</div>
 	</section>
 
 	<script type="text/javascript" src="json/externProfil.json"></script>
@@ -97,7 +151,7 @@
 					<p>Nationalität: {{nationalitaet}}</p>
 					<p>Art : {{art}}</p>
 					<p>Besonderheit : {{besonderheit}}</p>
-					<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
+					<p><small class="persoBase">Tags Neu : {{tagsNeu}}</small></p>
 				</div>
 			</div>
 		</div>
@@ -117,7 +171,7 @@
 				</div>
 				<div class="autorInfo">
 					<img src="{{{imgAutorURL}}}" alt="{{autorName}}" class="img-fluid img-thumbnail rounded-circle">
-					<p>Autor: {{autorName}}</p>
+					<p class="persoBase">Autor: {{autorName}}</p>
 				</div>
 			</div>
 		</div>
@@ -128,8 +182,7 @@
 			<div class="col-lg-4 col-md-6" >
 			<div class="singleDownload rounded">
 				<h4>{{title}}</h4>
-				<small>Tags : {{tags}}</small>
-				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
+				<p><small>Tags Neu : {{tagsNeu}}</small></p>
 				<p>{{text}}</p>
 				<a class="btn btn-outline-info" href="{{{linkToFile}}}" role="button">Download</a>
 			</div>
@@ -149,7 +202,7 @@
 				<p>Nationalität: {{nationalitaet}}</p>
 				<p>Art : {{art}}</p>
 				<p>Besonderheit : {{besonderheit}}</p>
-				<p><small class="tags">Tags Neu : {{tagsNeu}}</small></p>
+				<p><small>Tags Neu : {{tagsNeu}}</small></p>
 			</div>
 		</div>
 	</script>
