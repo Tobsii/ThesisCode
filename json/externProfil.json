@@ -63,7 +63,7 @@
     "intent" : "0",
     "buys" : ["Fruit", "Sweets", "Household Items"],
     "buysOnline" : ["Household Items", "Pet Supplies", "Optics"],
-    "ProductInterests": ["pets", "health", "travel"],
+    "ProductInterests": ["pets", "Health", "Travel"],
     "affinities" : ["Local", "Weather", "Politics"],
     "devices" : ["Smartphone", "Tablet"]
 },
