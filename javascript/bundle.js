@@ -16122,9 +16122,9 @@ function extend() {
 },{}],66:[function(require,module,exports){
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-const externTrackingProfil = require('../json/externProfil.json');
-const eigenesProfil = require('../json/eigenesProfil.json');
-const internTrackingProfil = require('../json/internTrackingProfil.json');
+const externTrackingProfil = require('../json/externProfil.json')
+const eigenesProfil = require('../json/eigenesProfil.json')
+const internTrackingProfil = require('../json/internTrackingProfil.json')
 
 const client = contentful.createClient({
   space: 'xmltm855c5tp',
@@ -16182,7 +16182,6 @@ window.parseAndMap = function (cookie) {
 
   console.log("Übergabewerte an Create Page: " + country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
   createPage(country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
-
 }
 
 function calculate_age(birth_month, birth_day, birth_year) {
@@ -16242,7 +16241,6 @@ function getBlogPost(author, categories) {
           .then(function (response) {
             let beitrag = response.items
             console.log(beitrag)
-
             buildPosts(beitrag)
           })
           .catch(console.error)
@@ -16260,7 +16258,6 @@ function getProdukte(categories) {
     .then(function (response) {
       let produkt = response.items
       console.log(produkt)
-
       buildProducts(produkt)
 
       // wenn nicht genug items mit der richtigen kategorie gefunden wurden, fülle random auf
@@ -16270,11 +16267,11 @@ function getProdukte(categories) {
         client.getEntries({
           content_type: 'produkt',
           limit: missingItems,
+          'fields.tags[ne]': categories,
         })
           .then(function (response) {
             let produkt = response.items
             console.log(produkt)
-
             buildProducts(produkt)
           })
           .catch(console.error)
@@ -16305,7 +16302,6 @@ function getDownloads(downloads) {
           .then(function (response) {
             let download = response.items
             console.log(download)
-
             buildDownloads(download)
           })
           .catch(console.error)
@@ -16426,7 +16422,6 @@ function mapEigenesProfil(cookie) {
       ownCategories = createCategoriesString(user.favoriteFood)
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
-
   })
 }
 
@@ -16462,7 +16457,6 @@ function mapExternProfil(cookie) {
       }
       console.log("extern Data: " + externCategories, externCountry)
     }
-
   })
 }
 
@@ -16670,7 +16664,7 @@ module.exports=[
     "intent" : "0",
     "buys" : ["Fruit", "Sweets", "Household Items"],
     "buysOnline" : ["Household Items", "Pet Supplies", "Optics"],
-    "ProductInterests": ["pets", "health", "travel"],
+    "ProductInterests": ["pets", "Health", "Travel"],
     "affinities" : ["Local", "Weather", "Politics"],
     "devices" : ["Smartphone", "Tablet"]
 },
@@ -16699,7 +16693,7 @@ module.exports=[
 module.exports=[
        {
         "id" : "0",
-        "categories" : ["asiatisch", "schnell"],
+        "categories" : ["Asiatisch", "Schnell"],
         "lastKlickedProduct" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
         "country" : "germany",
         "platform" : "ios",

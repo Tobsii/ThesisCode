@@ -145,6 +145,7 @@ function getProdukte(categories) {
         client.getEntries({
           content_type: 'produkt',
           limit: missingItems,
+          'fields.tags[ne]': categories,
         })
           .then(function (response) {
             let produkt = response.items
