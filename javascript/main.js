@@ -1,8 +1,8 @@
 const contentful = require('contentful')
 const Handlebars = require('handlebars')
-const externTrackingProfil = require('../json/externProfil.json');
-const eigenesProfil = require('../json/eigenesProfil.json');
-const internTrackingProfil = require('../json/internTrackingProfil.json');
+const externTrackingProfil = require('../json/externProfil.json')
+const eigenesProfil = require('../json/eigenesProfil.json')
+const internTrackingProfil = require('../json/internTrackingProfil.json')
 
 const client = contentful.createClient({
   space: 'xmltm855c5tp',
@@ -60,7 +60,6 @@ window.parseAndMap = function (cookie) {
 
   console.log("Übergabewerte an Create Page: " + country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
   createPage(country, age, ownAuthor, ownDownloads, internLastKlicked, uniqueCategories)
-
 }
 
 function calculate_age(birth_month, birth_day, birth_year) {
@@ -120,7 +119,6 @@ function getBlogPost(author, categories) {
           .then(function (response) {
             let beitrag = response.items
             console.log(beitrag)
-
             buildPosts(beitrag)
           })
           .catch(console.error)
@@ -138,7 +136,6 @@ function getProdukte(categories) {
     .then(function (response) {
       let produkt = response.items
       console.log(produkt)
-
       buildProducts(produkt)
 
       // wenn nicht genug items mit der richtigen kategorie gefunden wurden, fülle random auf
@@ -152,7 +149,6 @@ function getProdukte(categories) {
           .then(function (response) {
             let produkt = response.items
             console.log(produkt)
-
             buildProducts(produkt)
           })
           .catch(console.error)
@@ -183,7 +179,6 @@ function getDownloads(downloads) {
           .then(function (response) {
             let download = response.items
             console.log(download)
-
             buildDownloads(download)
           })
           .catch(console.error)
@@ -304,7 +299,6 @@ function mapEigenesProfil(cookie) {
       ownCategories = createCategoriesString(user.favoriteFood)
       console.log("ownData: " + ownAge, ownCategories, ownAuthor, ownDownloads, ownCountry)
     } // end if
-
   })
 }
 
@@ -340,7 +334,6 @@ function mapExternProfil(cookie) {
       }
       console.log("extern Data: " + externCategories, externCountry)
     }
-
   })
 }
 
