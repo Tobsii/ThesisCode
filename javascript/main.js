@@ -43,7 +43,7 @@ verarbeitet das Nutzerprofil so, dass Contentful damit arbeiten kann
 und gibt diese Werte anschließend an CreatePage()
 */
 window.parseAndMap = function (cookie) {
-  console.log("cookie: "+ cookie)
+  console.log("cookie: " + cookie)
 
   clearPage()
 
@@ -405,7 +405,7 @@ function createCategoriesString(userinfo) {
   return joinCategories
 }
 
-window.getCookieId = function (){
+window.getCookieId = function () {
   var selectedCookie = document.getElementById("userCookie").value
   document.getElementById("currentCookie").innerHTML = "Current User Cookie ID: " + selectedCookie
   parseAndMap(selectedCookie);

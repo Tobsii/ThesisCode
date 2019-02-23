@@ -1,89 +1,182 @@
 [
     {
-     "id" : "0",
-     "language": "german",
-     "gender":"m",
-     "age":"25-30",
-     "parent":"0",
-     "mainIncomeEarner" :"1",
-     "employement" : "self-employed",
-     "education" : "high",
-     "income" : "above average",
-     "intent" : "buy a car",
-     "buys" : ["Low fat", "Beers", "Healthy products"],
-     "buysOnline" : ["Travel Services", "Software", "Tickets", "Insurance"],
-     "ProductInterests": ["Sport", "Travel", "Arts"],
-     "affinities" : ["Books", "Lifestyle", "Cinema"],
-     "devices" : ["Smartphone", "Computer"]
- },
- {
-    "id" : "1",
-    "language": "german",
-    "gender":"w",
-    "age":"30-35",
-    "parent":"1",
-    "mainIncomeEarner" :"0",
-    "employement" : "employee",
-    "education" : "medium",
-    "income" : "average",
-    "intent" : "move to house",
-    "buys" : ["Snacks", "New Food Brands", "Sweets"],
-    "buysOnline" : ["Fashion", "Jewelly And Watches", "Beauty & Care"],
-    "ProductInterests": ["Baby Products", "Dating", "DIY Products"],
-    "affinities" : ["Family", "Food", "Movies"],
-    "devices" : ["Smartphone", "Tablet"]
-},
-{
-    "id" : "2",
-    "language": "danish",
-    "gender":"m",
-    "age":"20-25",
-    "parent":"0",
-    "mainIncomeEarner" :"1",
-    "employement" : "student",
-    "education" : "medium",
-    "income" : "low",
-    "intent" : "move to flat",
-    "buys" : ["Snacks", "Computer and Software", "Fast Food"],
-    "buysOnline" : ["Computer And Software", "Travel Services", "Tickets"],
-    "ProductInterests": ["Consumer Electronics", "Software", "Sport"],
-    "affinities" : ["Sports", "Holidays", "Entertainment Media"],
-    "devices" : ["Smartphone", "Tablet"]
-},
-{
-    "id" : "3",
-    "language": "english",
-    "gender":"w",
-    "age":"65-70",
-    "parent":"1",
-    "mainIncomeEarner" :"0",
-    "employement" : "retired",
-    "education" : "medium",
-    "income" : "average",
-    "intent" : "0",
-    "buys" : ["Fruit", "Sweets", "Household Items"],
-    "buysOnline" : ["Household Items", "Pet Supplies", "Optics"],
-    "ProductInterests": ["pets", "Health", "Travel"],
-    "affinities" : ["Local", "Weather", "Politics"],
-    "devices" : ["Smartphone", "Tablet"]
-},
-{
-    "id" : "4",
-    "language": "german",
-    "gender":"w",
-    "age":"30-35",
-    "parent":"0",
-    "mainIncomeEarner" :"1",
-    "employement" : "high",
-    "education" : "medium",
-    "income" : "high",
-    "intent" : "buy a car",
-    "buys" : ["Brand Name Food", "Healthy food", "Low-Carb"],
-    "buysOnline" : ["Food", "Education", "Computer"],
-    "ProductInterests": ["Dating", "Health", "Investment"],
-    "affinities" : ["Books", "Science", "E-commerce"],
-    "devices" : ["Tablet"]
-}
-
+        "id": "0",
+        "language": "german",
+        "gender": "m",
+        "age": "25-30",
+        "parent": "0",
+        "mainIncomeEarner": "1",
+        "employement": "self-employed",
+        "education": "high",
+        "income": "above average",
+        "intent": "buy a car",
+        "buys": [
+            "Low fat",
+            "Beers",
+            "Healthy products"
+        ],
+        "buysOnline": [
+            "Travel Services",
+            "Software",
+            "Tickets",
+            "Insurance"
+        ],
+        "ProductInterests": [
+            "Sport",
+            "Travel",
+            "Arts"
+        ],
+        "affinities": [
+            "Books",
+            "Lifestyle",
+            "Cinema"
+        ],
+        "devices": [
+            "Smartphone",
+            "Computer"
+        ]
+    },
+    {
+        "id": "1",
+        "language": "german",
+        "gender": "w",
+        "age": "30-35",
+        "parent": "1",
+        "mainIncomeEarner": "0",
+        "employement": "employee",
+        "education": "medium",
+        "income": "average",
+        "intent": "move to house",
+        "buys": [
+            "Snacks",
+            "New Food Brands",
+            "Sweets"
+        ],
+        "buysOnline": [
+            "Fashion",
+            "Jewelly And Watches",
+            "Beauty & Care"
+        ],
+        "ProductInterests": [
+            "Baby Products",
+            "Dating",
+            "DIY Products"
+        ],
+        "affinities": [
+            "Family",
+            "Food",
+            "Movies"
+        ],
+        "devices": [
+            "Smartphone",
+            "Tablet"
+        ]
+    },
+    {
+        "id": "2",
+        "language": "danish",
+        "gender": "m",
+        "age": "20-25",
+        "parent": "0",
+        "mainIncomeEarner": "1",
+        "employement": "student",
+        "education": "medium",
+        "income": "low",
+        "intent": "move to flat",
+        "buys": [
+            "Snacks",
+            "Computer and Software",
+            "Fast Food"
+        ],
+        "buysOnline": [
+            "Computer And Software",
+            "Travel Services",
+            "Tickets"
+        ],
+        "ProductInterests": [
+            "Consumer Electronics",
+            "Software",
+            "Sport"
+        ],
+        "affinities": [
+            "Sports",
+            "Holidays",
+            "Entertainment Media"
+        ],
+        "devices": [
+            "Smartphone",
+            "Tablet"
+        ]
+    },
+    {
+        "id": "3",
+        "language": "english",
+        "gender": "w",
+        "age": "65-70",
+        "parent": "1",
+        "mainIncomeEarner": "0",
+        "employement": "retired",
+        "education": "medium",
+        "income": "average",
+        "intent": "0",
+        "buys": [
+            "Fruit",
+            "Sweets",
+            "Household Items"
+        ],
+        "buysOnline": [
+            "Household Items",
+            "Pet Supplies",
+            "Optics"
+        ],
+        "ProductInterests": [
+            "pets",
+            "Health",
+            "Travel"
+        ],
+        "affinities": [
+            "Local",
+            "Weather",
+            "Politics"
+        ],
+        "devices": [
+            "Smartphone",
+            "Tablet"
+        ]
+    },
+    {
+        "id": "4",
+        "language": "german",
+        "gender": "w",
+        "age": "30-35",
+        "parent": "0",
+        "mainIncomeEarner": "1",
+        "employement": "high",
+        "education": "medium",
+        "income": "high",
+        "intent": "buy a car",
+        "buys": [
+            "Brand Name Food",
+            "Healthy food",
+            "Low-Carb"
+        ],
+        "buysOnline": [
+            "Food",
+            "Education",
+            "Computer"
+        ],
+        "ProductInterests": [
+            "Dating",
+            "Health",
+            "Investment"
+        ],
+        "affinities": [
+            "Books",
+            "Science",
+            "E-commerce"
+        ],
+        "devices": [
+            "Tablet"
+        ]
+    }
 ]
-

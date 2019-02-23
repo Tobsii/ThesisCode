@@ -1,46 +1,81 @@
 [
-       {
-        "id" : "0",
-        "categories" : ["Asiatisch", "Schnell"],
-        "lastKlickedProduct" : ["2pL4VFLG7yCkqu6Q64A2Ay", "5rSkxxw25yACMSOoOwo2Km", "3XW3PyImQEOs4yCWAoawyE"],
-        "country" : "germany",
-        "platform" : "ios",
-        "lastLogin" : "2018-05-03"
+    {
+        "id": "0",
+        "categories": [
+            "Asiatisch",
+            "Schnell"
+        ],
+        "lastKlickedProduct": [
+            "2pL4VFLG7yCkqu6Q64A2Ay",
+            "5rSkxxw25yACMSOoOwo2Km",
+            "3XW3PyImQEOs4yCWAoawyE"
+        ],
+        "country": "germany",
+        "platform": "ios",
+        "lastLogin": "2018-05-03"
     },
     {
-        "id" : "1",
-        "categories" : ["Mexikanisch", "Scharf", "Snack"],
-        "lastKlickedProduct" : ["4DfU0AZDnyiEIAGcSYeAmM", "4Qc2IDV98AYeaKkGk8e6kC", "2pL4VFLG7yCkqu6Q64A2Ay"],
-        "country" : "japan",
-        "platform" : "android",
-        "lastLogin" : "2018-12-03"
+        "id": "1",
+        "categories": [
+            "Mexikanisch",
+            "Scharf",
+            "Snack"
+        ],
+        "lastKlickedProduct": [
+            "4DfU0AZDnyiEIAGcSYeAmM",
+            "4Qc2IDV98AYeaKkGk8e6kC",
+            "2pL4VFLG7yCkqu6Q64A2Ay"
+        ],
+        "country": "japan",
+        "platform": "android",
+        "lastLogin": "2018-12-03"
     },
     {
-        "id" : "2",
-        "categories" : ["Asiatisch", "Low-Carb","Vegetarisch"],
-        "lastKlickedProduct" : ["6Kb34bwZPOKauaKCMc2EoK", "43jL92x0fSwWu802kq4WS", "1rf14tivKYQY0kuQQqsouc"],
-        "country" : "japan",
-        "platform" : "android",
-        "lastLogin" : "2018-10-20"
+        "id": "2",
+        "categories": [
+            "Asiatisch",
+            "Low-Carb",
+            "Vegetarisch"
+        ],
+        "lastKlickedProduct": [
+            "6Kb34bwZPOKauaKCMc2EoK",
+            "43jL92x0fSwWu802kq4WS",
+            "1rf14tivKYQY0kuQQqsouc"
+        ],
+        "country": "japan",
+        "platform": "android",
+        "lastLogin": "2018-10-20"
     },
     {
-        "id" : "3",
-        "categories" : ["Pizza", "Italienisch","Hauptmahlzeit"],
-        "lastKlickedProduct" : ["6PvZEEB0UoWSicGcc4KSum", "1y9or7a0ygooU0M408cG0C", "6DVOm8kUlG4I0QcCYYS0OU"],
-        "country" : "germany",
-        "platform" : "ios",
-        "lastLogin" : "2018-11-03"
+        "id": "3",
+        "categories": [
+            "Pizza",
+            "Italienisch",
+            "Hauptmahlzeit"
+        ],
+        "lastKlickedProduct": [
+            "6PvZEEB0UoWSicGcc4KSum",
+            "1y9or7a0ygooU0M408cG0C",
+            "6DVOm8kUlG4I0QcCYYS0OU"
+        ],
+        "country": "germany",
+        "platform": "ios",
+        "lastLogin": "2018-11-03"
     },
     {
-        "id" : "4",
-        "categories" : ["Frühstück", "Vegetarisch","Gebäck"],
-        "lastKlickedProduct" : ["nFYxYBnmFw8y0IoIosCYC", "7kyvY8l52oWowAam8GOqMe", "1y9or7a0ygooU0M408cG0C"],
-        "country" : "ireland",
-        "platform" : "android",
-        "lastLogin" : "2019-01-05"
+        "id": "4",
+        "categories": [
+            "Frühstück",
+            "Vegetarisch",
+            "Gebäck"
+        ],
+        "lastKlickedProduct": [
+            "nFYxYBnmFw8y0IoIosCYC",
+            "7kyvY8l52oWowAam8GOqMe",
+            "1y9or7a0ygooU0M408cG0C"
+        ],
+        "country": "ireland",
+        "platform": "android",
+        "lastLogin": "2019-01-05"
     }
-   
-
-
 ]
-
